@@ -1,0 +1,32 @@
+
+
+.Filesumb {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    position: sticky;  
+    bottom: 0;
+} 
+
+
+
+.Filesumb img {
+    height: 45px;
+    width: 45px;
+    border-radius: 50%;
+    border: 1px solid white;
+    margin-right: 10px;
+    margin-top: 8px;
+    margin-left: 8px;
+
+}
+.Filesumb .title {
+    padding-left: 5px;
+    padding-top: 8px;
+    color: rgb(2, 0, 0);
+ 
+}
+
+.Filesumb.Filesumb h3 {
+    padding-top: 8px;
+}
