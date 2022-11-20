@@ -106,7 +106,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
             />
             <Box sx={{ ml: 2 }}>
               <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                {userInfo ? <>{userInfo.name}</> : 'John Doe'}
+                {userInfo ? <>{userInfo.first_name} {userInfo.last_name}</> : 'John Doe'}
               </Typography>
             </Box>
           </AccountStyle>

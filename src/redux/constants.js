@@ -1,2 +1,2 @@
-export const DOMAIN = 'http://67.207.73.246:8080';
+export const DOMAIN = 'http://localhost:8080';
 

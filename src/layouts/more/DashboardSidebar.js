@@ -62,28 +62,28 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
-       // Data after sending the token Validation__Authorization
-       const config = {
-        headers: {
-          'Content-type': 'application/json',
-          Authorization: `Bearer ${userInfo?.access}`,
-        },
-      };
-      //  getting sub_User_Data Function
-      const getUserData = async () => {
-        try {
-          const response = await axios.get(
-            `${process.env.REACT_APP_API_KEY}/api/v1/accounts/user-details/${userInfo?.id}`,
-            config
-          );
-          setUserData(response.data);
-        } catch (err) {
-          console.error(err);
-        }
-      };
-      useEffect(() => {
-        getUserData();
-      },[]);
+  // Data after sending the token Validation__Authorization
+  const config = {
+    headers: {
+      'Content-type': 'application/json',
+      Authorization: `Bearer ${userInfo?.access}`,
+    },
+  };
+  //  getting sub_User_Data Function
+  const getUserData = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_KEY}/api/v1/accounts/user-details/${userInfo?.id}`,
+        config
+      );
+      setUserData(response.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  useEffect(() => {
+    getUserData();
+  }, []);
 
   const renderContent = (
     <Scrollbar
@@ -105,7 +105,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
             />
             <Box sx={{ ml: 2 }}>
               <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                {userInfo ? <>{userInfo.name}</> : 'Selim soliman'}
+                {userInfo ? <>{userInfo.first_name} {userInfo.last_name}</> : 'Selim soliman'}
               </Typography>
             </Box>
           </AccountStyle>

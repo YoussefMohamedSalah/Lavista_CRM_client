@@ -244,7 +244,7 @@ const NeedsManagment = () => {
           {/* wedgets section end */}
           {/* ============================================== */}
           {/* messages section */}
-          <NotficationList />
+          <NotficationList GroupTitle={'Real Time Needs '} />
           {/* messages section end */}
         </div>
       </div>

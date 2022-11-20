@@ -18,8 +18,8 @@ export const loginReducer = (state = {}, action) => {
       return { loading: false, userInfo: action.payload };
 
     case LOGIN_FAIL:
-      // return { loading: false, error: action.payload };
-      return { loading: false, userInfo: action.payload };
+      return { loading: false, error: action.payload };
+    // return { loading: false, userInfo: action.payload };
 
     case LOGOUT:
       return {};

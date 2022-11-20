@@ -83,7 +83,7 @@ export default function AccountPopover() {
   };
   useEffect(() => {
     getUserData();
-  },[]);
+  }, []);
   return (
     <>
       {userInfo ? (
@@ -135,7 +135,7 @@ export default function AccountPopover() {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle2" noWrap>
-            {userInfo ? <>{userInfo.name}</> : 'Unknown vistor'}
+            {userInfo ? <>{userInfo.first_name} {userInfo.last_name}</> : 'Unknown vistor'}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
             {userInfo ? <>{userInfo.email}</> : 'Signin and enjoy'}

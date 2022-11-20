@@ -11,7 +11,7 @@ import {
 
 import { DOMAIN } from '../constants';
 
-export const login = (email, password) => async (dispatch) => {
+export const login = (loggin, password) => async (dispatch) => {
   try {
     dispatch({
       type: LOGIN_REQUEST,
@@ -23,7 +23,7 @@ export const login = (email, password) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.post(`${DOMAIN}/api/v1/accounts/login/`, { email, password }, config);
+    const { data } = await axios.post(`${DOMAIN}/auth/login`, { loggin, password }, config);
 
     dispatch({
       type: LOGIN_SUCCESS,
@@ -39,7 +39,7 @@ export const login = (email, password) => async (dispatch) => {
   }
 };
 
-export const register = (firstName, lastName, email, password) => async (dispatch) => {
+export const register = (firstName, lastName, loggin, password) => async (dispatch) => {
   try {
     dispatch({
       type: REGISTER_REQUEST,
@@ -52,8 +52,8 @@ export const register = (firstName, lastName, email, password) => async (dispatc
     };
 
     const { data } = await axios.post(
-      `${DOMAIN}/api/v1/accounts/register/`,
-      { firstName, lastName, email, password },
+      `${DOMAIN}/auth/signup`,
+      { firstName, lastName, loggin, password },
       config
     );
 
