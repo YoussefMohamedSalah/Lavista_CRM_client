@@ -19,7 +19,7 @@ import AboutLaVista from '../pages/OpenPages/AboutLaVista';
 // Locked Pages
 import DashboardApp from '../pages/ProtectedPages/GeneralPages/DashboardApp';
 import QrCodeManagment from '../pages/ProtectedPages/QrCodeSystem/QrCodeManagment';
-import FinancialsManagment from '../pages/ProtectedPages/FinancialsSystem/FinancialsManagment';
+import FinancialsManagment from '../pages/ProtectedPages/FinancialsSystem';
 import NeedsManagment from '../pages/ProtectedPages/NeedsSystem/NeedsManagment';
 import PermissionsManagment from '../pages/ProtectedPages/PermissionsSystem/PermissionsManagment';
 

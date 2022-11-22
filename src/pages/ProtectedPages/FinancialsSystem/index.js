@@ -1,96 +1,40 @@
 /* eslint-disable arrow-body-style */
 /* eslint-disable react/button-has-type */
-import React from 'react';
-import './FinancialsManagment.scss';
-import NotficationList from './NotficationList';
-import WidgetsGroub from './WidgetsGroub';
+// components
+import { Box, Grid, Stack } from '@mui/material';
+import { useState } from 'react';
+// icons
+import { Icon } from '@iconify/react';
+// import { NavLink as RouterLink } from 'react-router-dom';
 
-const FinancialsManagment = () => {
-  // data for wedget Group,, And for every single widget
 
-  const StatusArray = [
-    { title: 'Hello', value: '26' },
-    { title: 'world', value: '43' },
-    { title: 'good', value: '76' },
-  ];
-  const WidgetData = [
-    {
-      id: 1,
-      date: 'December 10, 2020',
-      mainTitle: 'Web Designing',
-      subTitle: 'Prototyping',
-      bgColor: '#fee4cb',
-      color: '#ff942e',
-      progress: '80%',
-      doneItems: '123',
-      pendingItems: '13',
-    },
+import Page from '../../../components/Page';
+import PageHeader from './PageHeader';
+import PageTitleWrapper from 'src/components/PageTitleWrapper';
+import RecentOrders from './RecentOrders';;
 
-    {
-      id: 2,
-      date: 'December 10, 2020',
-      mainTitle: 'UI Development',
-      subTitle: 'Prototyping',
-      bgColor: '#ffd3e2',
-      color: '#df3670',
-      progress: '20%',
-      doneItems: '123',
-      pendingItems: '13',
-    },
+const QrCodeManagment = () => {
+  const [tab, setTab] = useState('qrcode_landing');
+  const [view, setView] = useState('list');
 
-    {
-      id: 3,
-      date: 'December 10, 2020',
-      mainTitle: 'Data Analysis',
-      subTitle: 'Prototyping',
-      bgColor: '#c8f7dc',
-      color: '#34c471',
-      progress: '60%',
-      doneItems: '123',
-      pendingItems: '13',
-    },
-    {
-      id: 4,
-      date: 'December 10, 2020',
-      mainTitle: 'Testing',
-      subTitle: 'Prototyping',
-      bgColor: '#e9e7fd',
-      color: '#4f3ff0',
-      progress: '50%',
-      doneItems: '123',
-      pendingItems: '13',
-    },
-    {
-      id: 5,
-      date: 'December 10, 2020',
-      mainTitle: 'Web Designing',
-      subTitle: 'Prototyping',
-      bgColor: '#fee4cb',
-      color: '#ff942e',
-      progress: '80%',
-      doneItems: '123',
-      pendingItems: '13',
-    },
-    {
-      id: 6,
-      date: 'December 10, 2020',
-      mainTitle: 'Web Designing',
-      subTitle: 'Prototyping',
-      bgColor: '#d5deff',
-      color: '#4067f9',
-      progress: '40%',
-      doneItems: '123',
-      pendingItems: '13',
-    },
-  ];
+  const handleChange = (event, nextView) => {
+    setView(nextView);
+  };
+
+  const [tabOne, setTabOne] = useState(true);
+  const [tabTwo, setTabTwo] = useState(false);
+  const [tabThree, setTabThree] = useState(false);
+  const [tabFour, setTabFour] = useState(false);
+
   return (
-    <>
+    <Page title="Qr Code">
       <div className="app-container" style={{ borderRadius: '15px' }}>
         <div className="app-header">
           <div className="app-header-left">
             <span className="app-icon" />
-            <p className="app-name">Financials Managment</p>
+            <p className="app-name">Maintenance Fees</p>
           </div>
+
           <div className="app-header-right">
             <button className="mode-switch" title="Switch Theme">
               <svg
@@ -167,7 +111,19 @@ const FinancialsManagment = () => {
         <div className="app-content">
           {/* --------------------- Side Icons -------------------------------------------------- */}
           <div className="app-sidebar">
-            <a href="#" className="app-sidebar-link active">
+            <Box
+              component="a"
+              to={'#'}
+              className={tabOne === true ? 'app-sidebar-link active' : 'app-sidebar-link'}
+              onClick={() => {
+                setTabOne(true);
+                setTab('qrcode_landing');
+
+                setTabTwo(false);
+                setTabFour(false);
+                setTabThree(false);
+              }}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -183,44 +139,48 @@ const FinancialsManagment = () => {
                 <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
                 <polyline points="9 22 9 12 15 12 15 22" />
               </svg>
-            </a>
-            <a href="#" className="app-sidebar-link">
-              <svg
-                className="link-icon feather feather-pie-chart"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                fill="none"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-              >
-                <defs />
-                <path d="M21.21 15.89A10 10 0 118 2.83M22 12A10 10 0 0012 2v10z" />
-              </svg>
-            </a>
-            <a href="#" className="app-sidebar-link">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="feather feather-calendar"
-              >
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                <line x1="16" y1="2" x2="16" y2="6" />
-                <line x1="8" y1="2" x2="8" y2="6" />
-                <line x1="3" y1="10" x2="21" y2="10" />
-              </svg>
-            </a>
-            <a href="#" className="app-sidebar-link">
+            </Box>
+            <Box
+              component="a"
+              to={'#'}
+              className={tabTwo === true ? 'app-sidebar-link active' : 'app-sidebar-link'}
+              onClick={() => {
+                setTabTwo(true);
+                setTab('generate_qrcode');
+                setTabFour(false);
+                setTabOne(false);
+                setTabThree(false);
+              }}
+            >
+              <Icon icon="bi:qr-code-scan" width={22} height={22} />
+            </Box>
+            <Box
+              component="a"
+              to={'#'}
+              className={tabThree === true ? 'app-sidebar-link active' : 'app-sidebar-link'}
+              onClick={() => {
+                setTabThree(true);
+                setTab('qrcode_scan');
+
+                setTabFour(false);
+                setTabOne(false);
+                setTabTwo(false);
+              }}
+            >
+              <Icon icon="mdi:magnify-scan" width={22} height={22} />
+            </Box>
+            <Box
+              component="a"
+              to={'#'}
+              className={tabFour === true ? 'app-sidebar-link active' : 'app-sidebar-link'}
+              onClick={() => {
+                setTabFour(true);
+                setTab('qrcode_history');
+                setTabOne(false);
+                setTabTwo(false);
+                setTabThree(false);
+              }}
+            >
               <svg
                 className="link-icon feather feather-settings"
                 xmlns="http://www.w3.org/2000/svg"
@@ -237,19 +197,43 @@ const FinancialsManagment = () => {
                 <circle cx="12" cy="12" r="3" />
                 <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z" />
               </svg>
-            </a>
+            </Box>
           </div>
-          {/* wedgets section */}
-          <WidgetsGroub GroupTitle={'Statistics'} WidgetData={WidgetData} StatusArray={StatusArray} />
-          {/* wedgets section end */}
-          {/* ============================================== */}
-          {/* messages section */}
-          <NotficationList GroupTitle={'Real Time Paying '} />
-          {/* messages section end */}
+          <Stack direction='column' sx={{ width: '100%' }}>
+            <PageTitleWrapper>
+              <PageHeader />
+            </PageTitleWrapper>
+            <Box>
+              <Grid item xl={12}
+                direction="row"
+                justifyContent="center"
+                alignItems="stretch"
+                spacing={3}
+              >
+                <Grid item xl={12} xs={12}>
+                  <RecentOrders />
+                </Grid>
+              </Grid>
+            </Box>
+          </Stack>
+          {/* <Grid item xl={8} lg={8} md={9} sm={12} xs={12}>
+              {tab === 'qrcode_landing' ? (
+                <WidgetsGroub GroupTitle={'Statistics'} WidgetData={WidgetLandingData} StatusArray={StatusLanding} />
+              ) : null}
+              {tab === 'generate_qrcode' ? (
+                <QrCodeGenerator GroupTitle={'Generate QR Code'} StatusArray={StatusGenerate} />
+              ) : null}
+              {tab === 'qrcode_scan' ? <QrCodeScanner GroupTitle={'Scan QR Code'} StatusArray={StatusScan} /> : null}
+              {tab === 'qrcode_history' ? <QrCodeHistory /> : null}
+            </Grid>
+            <Grid item xl={4} lg={4} md={3} sm={12} xs={12}>
+              <NotficationList GroupTitle={'Real Time Scanning '} />
+            </Grid> */}
+          {/* </Grid> */}
         </div>
       </div>
-    </>
+    </Page >
   );
 };
-export default FinancialsManagment;
+export default QrCodeManagment;
 
