@@ -16,6 +16,9 @@ import {
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import CloseIcon from '@mui/icons-material/Close';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+
 
 export default function PayMaintenanceFeesFormModal({ handleClose, show, ownerData }) {
     const [open, setOpen] = useState(false);
@@ -28,10 +31,10 @@ export default function PayMaintenanceFeesFormModal({ handleClose, show, ownerDa
         },
     };
     // ---------------------------------------------------------------------------------------
-    const [values, setValues] = useState({
-        payment_method: 'cash',
-        amount: ownerData?.amount,
-    });
+    // const [values, setValues] = useState({
+    //     payment_method: 'cash',
+    //     amount: ownerData?.amount,
+    // });
     // ---------------------------------------------------------
     useEffect(() => {
         setOpen(false);
@@ -43,7 +46,7 @@ export default function PayMaintenanceFeesFormModal({ handleClose, show, ownerDa
         }, 3000);
     };
     // ---------------------------------------------------------------------------------------
-    const payOwnerMaintenanceFees = async () => {
+    const payOwnerMaintenanceFees = async (values) => {
         try {
             await axios.post(`${process.env.REACT_APP_API_KEY}/api/maintenance/${ownerData?.id}/transaction`, values, config);
             console.log(values)
@@ -55,37 +58,46 @@ export default function PayMaintenanceFeesFormModal({ handleClose, show, ownerDa
     //  -------------------------------------------------------------------------
     const Payment_Method = [
         {
-            value: 'Cash',
+            value: 'cash',
             label: 'Cash',
         },
         {
-            value: 'Visa',
+            value: 'visa',
             label: 'Visa',
         },
         {
-            value: 'Check',
+            value: 'check',
             label: 'Check',
         },
     ]
 
+    // ---------------------------------------------------------------------------
+    const formik = useFormik({
+        initialValues:
+        {
+            payment_method: 'cash',
+            amount: '',
+        }
+        ,
+        validationSchema: Yup.object({
+            payment_method: Yup.string().required(),
+            amount: Yup.number().required()
+        }),
+
+        onSubmit: (values) => {
+            payOwnerMaintenanceFees(values);
+            formHandler()
+        },
+    });
 
 
 
-    const handleChange = (event) => {
-        setValues({
-            ...values,
-            [event.target.name]: event.target.value,
-        });
-    };
 
-    const handleSubmit = async () => {
-        payOwnerMaintenanceFees()
-        formHandler()
-    }
+
 
     return (
         <>
-            <form autoComplete="off" {...ownerData} >
+            <form autoComplete="off" onSubmit={formik.handleSubmit}>
                 <Modal show={show} onHide={handleClose} centered>
                     <Modal.Header closeButton>
                         <Modal.Title>⭕ Pay Maintenance Fees</Modal.Title>
@@ -137,23 +149,28 @@ export default function PayMaintenanceFeesFormModal({ handleClose, show, ownerDa
                                             fullWidth
                                             label="Total To Pay"
                                             name="amount"
-                                            onChange={handleChange}
+                                            onChange={formik.handleChange}
                                             required
                                             autoComplete='off'
-                                            placeholder={values.amount || "0"}
+                                            placeholder={formik.values.amount || "0"}
+                                            value={formik.values.amount}
+                                            onBlur={formik.handleBlur}
                                             variant="outlined"
                                         />
+                                        {formik.touched.amount && formik.errors.amount && <p>{formik.errors.amount}</p>}
+
                                     </Grid>
                                     <Grid item md={12} xs={12}>
                                         <TextField
                                             fullWidth
                                             label="payment Method"
                                             name="payment_method"
-                                            onChange={handleChange}
+                                            onChange={formik.handleChange}
                                             required
                                             select
                                             SelectProps={{ native: true }}
-                                            value={values.payment_method || ""}
+                                            value={formik.values.payment_method || ""}
+                                            onBlur={formik.handleBlur}
                                             variant="outlined"
                                         >
                                             {Payment_Method.map((option) => (
@@ -162,6 +179,8 @@ export default function PayMaintenanceFeesFormModal({ handleClose, show, ownerDa
                                                 </option>
                                             ))}
                                         </TextField>
+                                        {formik.touched.payment_method && formik.errors.payment_method && <p>{formik.errors.payment_method}</p>}
+
                                     </Grid>
                                 </Grid>
                             </CardContent>
@@ -172,7 +191,7 @@ export default function PayMaintenanceFeesFormModal({ handleClose, show, ownerDa
                         <Button variant="secondary" onClick={handleClose}>
                             Cancel
                         </Button>
-                        <Button onClick={() => handleSubmit()} variant="contained" type="submit">
+                        <Button onClick={() => formik.handleSubmit()} variant="contained" type="submit">
                             👉 Pay Now
                         </Button>
                     </Modal.Footer>

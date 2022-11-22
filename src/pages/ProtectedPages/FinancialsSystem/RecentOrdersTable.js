@@ -96,7 +96,6 @@ const RecentOrdersTable = ({ OwnersList, show, setShow }) => {
   const [filters, setFilters] = useState({
     status: null
   });
-  console.log(filters)
 
 
   const statusOptions = [
