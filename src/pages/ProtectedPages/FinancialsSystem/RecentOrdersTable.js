@@ -31,26 +31,6 @@ import BulkActions from './BulkActions';
 import Label from 'src/components/Label';
 import PayMaintenanceFeesFormModal from './PayMaintenanceFeesFormModal';
 
-const getStatusLabel = (ownerOrderStatus) => {
-  const map = {
-    failed: {
-      text: 'Failed',
-      color: 'error'
-    },
-    completed: {
-      text: 'Completed',
-      color: 'success'
-    },
-    pending: {
-      text: 'Pending',
-      color: 'warning'
-    }
-  };
-
-  const { text, color } = map[ownerOrderStatus];
-
-  return <Label color={color}>{text}</Label>;
-};
 
 const applyFilters = (ownerOrders, filters) => {
   return ownerOrders.filter((ownerOrder) => {
@@ -68,10 +48,43 @@ const applyPagination = (ownerOrders, page, limit) => {
   return ownerOrders.slice(page * limit, page * limit + limit);
 };
 
-const RecentOrdersTable = ({ OwnersList }) => {
-  const [show, setShow] = useState(false);
+const RecentOrdersTable = ({ OwnersList, show, setShow }) => {
+  // const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+
+  // setting The Label State 
+  // const getStatusLabel = (maintenanceFees) => {
+  //   if (maintenanceFees <= 1000) {
+  //     const color = 'success'
+  //     const text = 'Good'
+  //     return <Label color={color}>{text}</Label>
+  //   } else if (maintenanceFees > 1000 && maintenanceFees < 5000) {
+  //     const color = 'warning'
+  //     const text = 'Need To Pay'
+  //     return <Label color={color}>{text}</Label>
+  //   } else if (maintenanceFees >= 5000) {
+  //     const color = 'error'
+  //     const text = 'Must Pay'
+  //     return <Label color={color}>{text}</Label>
+  //   }
+  // }
+  const getStatusLabel = (status) => {
+    if (status === 'good') {
+      const color = 'success'
+      const text = 'Good'
+      return <Label color={color}>{text}</Label>
+    } else if (status === 'normal') {
+      const color = 'warning'
+      const text = 'Normal'
+      return <Label color={color}>{text}</Label>
+    } else if (status === 'urgent') {
+      const color = 'error'
+      const text = 'Must Pay'
+      return <Label color={color}>{text}</Label>
+    }
+  }
 
 
   const [selectedOwnerOrders, setSelectedOwnerOrders] = useState([]);
@@ -83,6 +96,7 @@ const RecentOrdersTable = ({ OwnersList }) => {
   const [filters, setFilters] = useState({
     status: null
   });
+  console.log(filters)
 
 
   const statusOptions = [
@@ -91,16 +105,16 @@ const RecentOrdersTable = ({ OwnersList }) => {
       name: 'All'
     },
     {
-      id: 'completed',
-      name: 'Completed'
+      id: 'good',
+      name: 'Good'
     },
     {
-      id: 'pending',
-      name: 'Pending'
+      id: 'normal',
+      name: 'Normal'
     },
     {
-      id: 'failed',
-      name: 'Failed'
+      id: 'urgent',
+      name: 'Must Pay'
     }
   ];
 
@@ -170,7 +184,7 @@ const RecentOrdersTable = ({ OwnersList }) => {
     <Card sx={{ width: '100%' }}>
       {selectedBulkActions && (
         <Box flex={1} p={2}>
-          <BulkActions  handleShow={handleShow} />
+          <BulkActions handleShow={handleShow} />
         </Box>
       )}
       {!selectedBulkActions && (
@@ -267,6 +281,7 @@ const RecentOrdersTable = ({ OwnersList }) => {
                       {ownerOrder.phone_number}
                     </Typography>
                   </TableCell>
+
                   <TableCell>
                     <Typography
                       variant="body1"
@@ -275,10 +290,11 @@ const RecentOrdersTable = ({ OwnersList }) => {
                       gutterBottom
                       noWrap
                     >
-                      {ownerOrder.unit_number}
+                      {ownerOrder.owner_of}
                     </Typography>
 
                   </TableCell>
+
                   <TableCell>
                     <Typography
                       variant="body1"
@@ -287,7 +303,7 @@ const RecentOrdersTable = ({ OwnersList }) => {
                       gutterBottom
                       noWrap
                     >
-                      {ownerOrder.to_pay}
+                      {ownerOrder.maintenance_fees}
                     </Typography>
 
                   </TableCell>

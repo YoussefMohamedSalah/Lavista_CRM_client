@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
 import Modal from 'react-bootstrap/Modal';
 import {
-    Box,
     Card,
     CardContent,
     CardHeader,
@@ -15,8 +13,6 @@ import {
     Collapse,
     Typography,
 } from '@mui/material';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import CloseIcon from '@mui/icons-material/Close';
@@ -33,9 +29,8 @@ export default function PayMaintenanceFeesFormModal({ handleClose, show, ownerDa
     };
     // ---------------------------------------------------------------------------------------
     const [values, setValues] = useState({
-
-        totalToPay: ownerData?.to_pay,
-        paymentMethod: ''
+        payment_method: 'cash',
+        amount: ownerData?.amount,
     });
     // ---------------------------------------------------------
     useEffect(() => {
@@ -48,14 +43,16 @@ export default function PayMaintenanceFeesFormModal({ handleClose, show, ownerDa
         }, 3000);
     };
     // ---------------------------------------------------------------------------------------
-    const updateUserData = async (values) => {
+    const payOwnerMaintenanceFees = async () => {
         try {
-            await axios.post(`${process.env.REACT_APP_API_KEY}/api/v1/accounts/edit-user/${userInfo?.id}/`, values, config);
+            await axios.post(`${process.env.REACT_APP_API_KEY}/api/maintenance/${ownerData?.id}/transaction`, values, config);
+            console.log(values)
         } catch (err) {
+            console.log('error')
             console.error(err);
         }
     };
-    // ---------------------------------------------------------------------------------------
+    //  -------------------------------------------------------------------------
     const Payment_Method = [
         {
             value: 'Cash',
@@ -81,8 +78,8 @@ export default function PayMaintenanceFeesFormModal({ handleClose, show, ownerDa
         });
     };
 
-    const handleSubmit = async (event) => {
-        // loggic
+    const handleSubmit = async () => {
+        payOwnerMaintenanceFees()
         formHandler()
     }
 
@@ -126,25 +123,24 @@ export default function PayMaintenanceFeesFormModal({ handleClose, show, ownerDa
                                         </Grid>
                                         <Grid item md={12} xs={12}>
                                             <Typography>
-                                                Unit Number : {ownerData?.unit_number}
+                                                Unit Number : {ownerData?.owner_of}
                                             </Typography>
                                         </Grid>
                                         <Grid item md={12} xs={12}>
                                             <Typography>
-                                                Total To Pay : {ownerData?.to_pay}
+                                                Total To Pay : {ownerData?.maintenance_fees}
                                             </Typography>
                                         </Grid>
                                     </Grid>
                                     <Grid item md={12} xs={12}>
                                         <TextField
                                             fullWidth
-                                            label="totalToPay"
-                                            name="totalToPay"
+                                            label="Total To Pay"
+                                            name="amount"
                                             onChange={handleChange}
                                             required
                                             autoComplete='off'
-                                            value={values.totalToPay}
-                                            placeholder={values.totalToPay}
+                                            placeholder={values.amount || "0"}
                                             variant="outlined"
                                         />
                                     </Grid>
@@ -152,7 +148,7 @@ export default function PayMaintenanceFeesFormModal({ handleClose, show, ownerDa
                                         <TextField
                                             fullWidth
                                             label="payment Method"
-                                            name="paymentMethod"
+                                            name="payment_method"
                                             onChange={handleChange}
                                             required
                                             select
