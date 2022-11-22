@@ -30,9 +30,9 @@ const navConfig = [
   },
   {
     // mentanace-and-accounts === Financials Managment $
-    title: 'Financials Managment',
-    path: '/dashboard/financials_managment',
-    icon: getIcon('flat-color-icons:calculator'),
+    title: 'Owners Managment',
+    path: '/dashboard/owners_managment',
+    icon: getIcon('material-symbols:location-home'),
     state: 'block',
   },
   {

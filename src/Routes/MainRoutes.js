@@ -19,14 +19,12 @@ import AboutLaVista from '../pages/OpenPages/AboutLaVista';
 // Locked Pages
 import DashboardApp from '../pages/ProtectedPages/GeneralPages/DashboardApp';
 import QrCodeManagment from '../pages/ProtectedPages/QrCodeSystem/QrCodeManagment';
-import FinancialsManagment from '../pages/ProtectedPages/FinancialsSystem';
+import OwnersManagment from '../pages/ProtectedPages/OwnersSystem';
 import NeedsManagment from '../pages/ProtectedPages/NeedsSystem/NeedsManagment';
 import PermissionsManagment from '../pages/ProtectedPages/PermissionsSystem/PermissionsManagment';
 
 //
 import User from '../pages/User';
-import Tablou from '../pages/catpages/Tablou';
-import Laser from '../pages/catpages/Laser';
 import FileMore from '../pages/FileAndMore';
 import Myprofile from '../pages/Myprofile';
 import WorkersManagment from '../pages/ProtectedPages/WorkersSystem/WorkersManagment';
@@ -68,7 +66,7 @@ export default function Router() {
         // here i should add all internal Pages, That belongs to Owner
         { path: 'app', element: <DashboardApp /> },
         { path: 'qr_managment', element: <QrCodeManagment /> },
-        { path: 'financials_managment', element: <FinancialsManagment /> },
+        { path: 'owners_managment', element: <OwnersManagment /> },
         { path: 'needs_managment', element: <NeedsManagment /> },
         { path: 'workers_managment', element: <WorkersManagment /> },
         { path: 'permissions_managment', element: <PermissionsManagment /> },
