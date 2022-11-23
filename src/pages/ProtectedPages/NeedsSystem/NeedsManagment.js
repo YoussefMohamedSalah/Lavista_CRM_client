@@ -1,7 +1,7 @@
 /* eslint-disable arrow-body-style */
 /* eslint-disable react/button-has-type */
 import React, { useState } from 'react';
-import './NeedsManagment.scss';
+import '../NeedsManagment.scss';
 import NotficationList from './NotficationList';
 import WidgetsGroub from './WidgetsGroub';
 import Page from '../../../components/Page';
