@@ -4,41 +4,15 @@
 import { Button, Grid, Stack, Typography, Card } from '@mui/material';
 import PageTitleWrapper from 'src/components/PageTitleWrapper';
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
-import axios from 'axios';
-import { useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
 import OwnersDetailsTable from './OwnersDetailsTable';
+import { useState } from 'react';
 
 
 function OwnersFinance() {
-    // to the child component
     const [show, setShow] = useState(false);
-    // ---------------------------------------------
-    const [ownersData, setOwnersData] = useState([])
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
-    const userLogin = useSelector((state) => state.userLogin);
-    const { userInfo } = userLogin;
-    const config = {
-        headers: {
-            'Content-type': 'application/json',
-            Authorization: `Bearer ${userInfo?.access}`,
-        },
-    };
-
-    //  getting OwnersData 
-    const getOwnersData = async () => {
-        try {
-            const response = await axios.get(
-                `${process.env.REACT_APP_API_KEY}/api/get_owners/`, config);
-            setOwnersData(response.data);
-        } catch (err) {
-            console.error(err);
-        }
-    };
-    useEffect(() => {
-        getOwnersData();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [show]);
 
     return (
         <Stack direction='column' sx={{ width: '100%' }}>
@@ -63,6 +37,7 @@ function OwnersFinance() {
                                     sx={{ mt: { xs: 2, md: 0 } }}
                                     variant="contained"
                                     startIcon={<AddTwoToneIcon fontSize="small" />}
+                                    onClick={() => handleShow()}
                                 >
                                     Add New Owner
                                 </Button>
@@ -74,7 +49,7 @@ function OwnersFinance() {
             <Grid item xl={12} xs={12}>
             </Grid>
             <Card sx={{ width: '100%' }}>
-                <OwnersDetailsTable OwnersList={ownersData} show={show} setShow={setShow} />
+                <OwnersDetailsTable show={show} handleClose={handleClose} handleShow={handleShow} />
             </Card>
         </Stack>
     );

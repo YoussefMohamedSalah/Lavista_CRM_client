@@ -30,12 +30,7 @@ export default function PayMaintenanceFeesFormModal({ handleClose, show, ownerDa
             Authorization: `Bearer ${userInfo?.access}`,
         },
     };
-    // ---------------------------------------------------------------------------------------
-    // const [values, setValues] = useState({
-    //     payment_method: 'cash',
-    //     amount: ownerData?.amount,
-    // });
-    // ---------------------------------------------------------
+    // -------------------------------------------------------------------------------------------------------------------------------
     useEffect(() => {
         setOpen(false);
     }, [handleClose])

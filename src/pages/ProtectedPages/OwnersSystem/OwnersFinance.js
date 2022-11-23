@@ -13,6 +13,8 @@ import OwnersMaintenanceTable from './OwnerMaintenanceTable'
 function OwnersFinance() {
     // to the child component
     const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
     // ---------------------------------------------
     const [ownersData, setOwnersData] = useState([])
 
@@ -75,7 +77,7 @@ function OwnersFinance() {
             <Grid item xl={12} xs={12}>
             </Grid>
             <Card sx={{ width: '100%' }}>
-                <OwnersMaintenanceTable OwnersList={ownersData} show={show} setShow={setShow} />
+                <OwnersMaintenanceTable OwnersList={ownersData} show={show} handleClose={handleClose} handleShow={handleShow} />
             </Card>
         </Stack>
     );

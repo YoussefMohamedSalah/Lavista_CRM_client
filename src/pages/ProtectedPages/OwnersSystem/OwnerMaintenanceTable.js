@@ -1,354 +1,178 @@
-import { useState } from 'react';
-import PropTypes from 'prop-types';
-import {
-    Tooltip,
-    Divider,
-    Box,
-    FormControl,
-    InputLabel,
-    Card,
-    Checkbox,
-    IconButton,
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TablePagination,
-    TableRow,
-    TableContainer,
-    Select,
-    MenuItem,
-    Typography,
-    useTheme,
-    CardHeader
-} from '@mui/material';
 
-import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
-import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-import BulkActions from './BulkActions';
-import Label from 'src/components/Label';
+import React, { useEffect, useState } from 'react';
+import './styles.css';
+import Button from 'rsuite/Button';
+import { Table, Pagination } from 'rsuite';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+import AddNewUserModal from './AddNewUserModal';
 import PayMaintenanceFeesFormModal from './PayMaintenanceFeesFormModal';
 
+const { Column, HeaderCell, Cell } = Table;
 
-const applyFilters = (ownerOrders, filters) => {
-    return ownerOrders.filter((ownerOrder) => {
-        let matches = true;
-
-        if (filters.status && ownerOrder.status !== filters.status) {
-            matches = false;
-        }
-
-        return matches;
-    });
-};
-
-const applyPagination = (ownerOrders, page, limit) => {
-    return ownerOrders.slice(page * limit, page * limit + limit);
-};
-
-const OwnerMaintenanceTable = ({ OwnersList, show, setShow }) => {
-    // const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
-    const getStatusLabel = (status) => {
-        if (status === 'good') {
-            const color = 'success'
-            const text = 'Good'
-            return <Label color={color}>{text}</Label>
-        } else if (status === 'normal') {
-            const color = 'warning'
-            const text = 'Normal'
-            return <Label color={color}>{text}</Label>
-        } else if (status === 'urgent') {
-            const color = 'error'
-            const text = 'Must Pay'
-            return <Label color={color}>{text}</Label>
-        }
-    }
-
-
-    const [selectedOwnerOrders, setSelectedOwnerOrders] = useState([]);
-    // this is selected owner Data
-    const [ownerData, setOwnerData] = useState({})
-    const selectedBulkActions = selectedOwnerOrders.length > 0;
-    const [page, setPage] = useState(0);
-    const [limit, setLimit] = useState(5);
-    const [filters, setFilters] = useState({
-        status: null
-    });
-
-
-    const statusOptions = [
-        {
-            id: 'all',
-            name: 'All'
-        },
-        {
-            id: 'good',
-            name: 'Good'
-        },
-        {
-            id: 'normal',
-            name: 'Normal'
-        },
-        {
-            id: 'urgent',
-            name: 'Must Pay'
-        }
-    ];
-
-    const handleStatusChange = (e) => {
-        let value = null;
-
-        if (e.target.value !== 'all') {
-            value = e.target.value;
-        }
-
-        setFilters((prevFilters) => ({
-            ...prevFilters,
-            status: value
-        }));
-    };
-
-    const handleSelectAllOwnerOrders = (event) => {
-        setSelectedOwnerOrders(
-            event.target.checked
-                ? OwnersList.map((ownerOrder) => ownerOrder.id)
-                : []
-        );
-    };
-    // ------------------
-
-
-    const handleSelectOneOwnerOrder = (event, ownerOrderId) => {
-        if (!selectedOwnerOrders.includes(ownerOrderId)) {
-            setSelectedOwnerOrders((prevSelected) => [
-                ...prevSelected,
-                ownerOrderId
-            ]);
-        } else {
-            setSelectedOwnerOrders((prevSelected) =>
-                prevSelected.filter((id) => id !== ownerOrderId)
-            );
-        }
-    };
-
-    const handlePageChange = (event, newPage) => {
-        setPage(newPage);
-    };
-
-    const handleLimitChange = (event) => {
-        setLimit(parseInt(event.target.value));
-    };
-
-    const filteredOwnerOrders = applyFilters(OwnersList, filters);
-    const paginatedOwnerOrders = applyPagination(
-        filteredOwnerOrders,
-        page,
-        limit
+const EditableCell = ({ rowData, dataKey, onChange, ...props }) => {
+    const editing = rowData.status === 'EDIT';
+    return (
+        <Cell {...props} className={editing ? 'table-content-editing' : ''}>
+            {editing ? (
+                <input
+                    className="rs-input"
+                    defaultValue={rowData[dataKey]}
+                    onChange={event => {
+                        onChange && onChange(rowData.id, dataKey, event.target.value);
+                    }}
+                />
+            ) : (
+                <span className="table-content-edit-span">{rowData[dataKey]}</span>
+            )}
+        </Cell>
     );
-    const selectedSomeOwnersOrders =
-        selectedOwnerOrders.length > 0 &&
-        selectedOwnerOrders.length < OwnersList.length;
-    const selectedAllOwnersOrders =
-        selectedOwnerOrders.length === OwnersList.length;
-    const theme = useTheme();
+};
 
+const ActionCell = ({ rowData, dataKey, onClick, ...props }) => {
 
-
-
-    // -----*-----*------*------*-----*-----*-----*-----*-----*-----
 
     return (
-        <Card sx={{ width: '100%' }}>
-            {selectedBulkActions && (
-                <Box flex={1} p={2}>
-                    <BulkActions handleShow={handleShow} />
-                </Box>
-            )}
-            {!selectedBulkActions && (
-                <CardHeader
-                    action={
-                        <Box width={200}>
-                            <FormControl fullWidth variant="outlined">
-                                <InputLabel>Status</InputLabel>
-                                <Select
-                                    value={filters.status || 'all'}
-                                    onChange={handleStatusChange}
-                                    label="Status"
-                                    autoWidth
-                                >
-                                    {statusOptions.map((statusOption) => (
-                                        <MenuItem key={statusOption.id} value={statusOption.id}>
-                                            {statusOption.name}
-                                        </MenuItem>
-                                    ))}
-                                </Select>
-                            </FormControl>
-                        </Box>
-                    }
-                    title="Recent Orders"
-                />
-            )}
-            <Divider />
-            <TableContainer>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell padding="checkbox">
-                                <Checkbox
-                                    color="primary"
-                                    checked={selectedAllOwnersOrders}
-                                    indeterminate={selectedSomeOwnersOrders}
-                                    onChange={handleSelectAllOwnerOrders}
-                                />
-                            </TableCell>
-                            <TableCell>Owner Name</TableCell>
-                            <TableCell>Phone Number</TableCell>
-                            <TableCell>Unit Number</TableCell>
-                            <TableCell>Total To Pay</TableCell>
-                            <TableCell align="right">Status</TableCell>
-                            <TableCell align="right">Actions</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {paginatedOwnerOrders.map((ownerOrder) => {
-                            const isownerOrderSelected = selectedOwnerOrders.includes(
-                                ownerOrder.id
-                            );
-                            return (
-                                <TableRow
-                                    hover
-                                    key={ownerOrder.id}
-                                    selected={isownerOrderSelected}
-                                >
-                                    <TableCell padding="checkbox">
-                                        <Checkbox
-                                            color="primary"
-                                            checked={isownerOrderSelected}
-                                            onChange={(event) => {
-                                                handleSelectOneOwnerOrder(event, ownerOrder.id);
-                                                setOwnerData(ownerOrder);
-                                            }
-
-                                            }
-                                            value={isownerOrderSelected}
-                                        />
-                                    </TableCell>
-                                    <TableCell>
-                                        <Typography
-                                            variant="body1"
-                                            fontWeight="bold"
-                                            color="text.primary"
-                                            gutterBottom
-                                            noWrap
-                                        >
-                                            {ownerOrder.first_name} {ownerOrder.last_name}
-                                        </Typography>
-                                        {/* <Typography variant="body2" color="text.secondary" noWrap>
-                      {format(ownerOrder.orderDate, 'MMMM dd yyyy')}
-                    </Typography> */}
-                                    </TableCell>
-                                    <TableCell>
-                                        <Typography
-                                            variant="body1"
-                                            fontWeight="bold"
-                                            color="text.primary"
-                                            gutterBottom
-                                            noWrap
-                                        >
-                                            {ownerOrder.phone_number}
-                                        </Typography>
-                                    </TableCell>
-
-                                    <TableCell>
-                                        <Typography
-                                            variant="body1"
-                                            fontWeight="bold"
-                                            color="text.primary"
-                                            gutterBottom
-                                            noWrap
-                                        >
-                                            {ownerOrder.owner_of}
-                                        </Typography>
-
-                                    </TableCell>
-
-                                    <TableCell>
-                                        <Typography
-                                            variant="body1"
-                                            fontWeight="bold"
-                                            color="text.primary"
-                                            gutterBottom
-                                            noWrap
-                                        >
-                                            {ownerOrder.maintenance_fees}
-                                        </Typography>
-
-                                    </TableCell>
-
-                                    <TableCell align="right">
-                                        {getStatusLabel(ownerOrder.status)}
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        <Tooltip title="Edit Order" arrow>
-                                            <IconButton
-                                                sx={{
-                                                    '&:hover': {
-                                                        background: theme.palette.primary.lighter
-                                                    },
-                                                    color: theme.palette.primary.main
-                                                }}
-                                                color="inherit"
-                                                size="small"
-                                            >
-                                                <EditTwoToneIcon fontSize="small" />
-                                            </IconButton>
-                                        </Tooltip>
-                                        <Tooltip title="Delete Order" arrow>
-                                            <IconButton
-                                                sx={{
-                                                    '&:hover': { background: theme.palette.error.lighter },
-                                                    color: theme.palette.error.main
-                                                }}
-                                                color="inherit"
-                                                size="small"
-                                            >
-                                                <DeleteTwoToneIcon fontSize="small" />
-                                            </IconButton>
-                                        </Tooltip>
-                                    </TableCell>
-                                </TableRow>
-                            );
-                        })}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-            <Box p={2}>
-                <TablePagination
-                    component="div"
-                    count={filteredOwnerOrders.length}
-                    onPageChange={handlePageChange}
-                    onRowsPerPageChange={handleLimitChange}
-                    page={page}
-                    rowsPerPage={limit}
-                    rowsPerPageOptions={[5, 10, 25, 30]}
-                />
-            </Box>
-            <PayMaintenanceFeesFormModal handleClose={handleClose} show={show} ownerData={ownerData} />
-        </Card>
-
+        <Cell {...props} style={{ padding: '6px' }}>
+            <Button
+                appearance="link"
+                onClick={() => {
+                    onClick(rowData.id);
+                    console.log(rowData)
+                }}
+            >
+                {rowData.status === 'Pay' ? 'Pay' : 'Pay'}
+            </Button>
+        </Cell>
     );
 };
 
-OwnerMaintenanceTable.propTypes = {
-    ownerOrders: PropTypes.array.isRequired
+const OwnersDetailsTable = ({ show, handleShow, handleClose }) => {
+    const [ownersData, setOwnersData] = useState([])
+    const [selectedOwnerData, setSelectedOwnerData] = useState()
+    const [limit, setLimit] = useState(10);
+    const [page, setPage] = useState(1);
+    // ----
+    const handleChangeLimit = dataKey => {
+        setPage(1);
+        setLimit(dataKey);
+    };
+
+    const data = ownersData.filter((v, i) => {
+        const start = limit * (page - 1);
+        const end = start + limit;
+        return i >= start && i < end;
+    });
+
+
+
+
+    const handleChange = (id, key, value) => {
+        const nextData = Object.assign([], ownersData);
+        nextData.find(item => item.id === id)[key] = value;
+        // console.log(nextData)
+        setOwnersData(nextData);
+    };
+    const handleEditState = id => {
+        const nextData = Object.assign([], ownersData);
+        const activeItem = nextData.find(item => item.id === id);
+        activeItem.status = activeItem.status ? null : 'Pay';
+        setOwnersData(nextData);
+    };
+    // getteing all Owners Data
+
+    const userLogin = useSelector((state) => state.userLogin);
+    const { userInfo } = userLogin;
+    const config = {
+        headers: {
+            'Content-type': 'application/json',
+            Authorization: `Bearer ${userInfo?.access}`,
+        },
+    };
+
+    //  getting OwnersData 
+    const getOwnersData = async () => {
+        try {
+            const response = await axios.get(
+                `${process.env.REACT_APP_API_KEY}/api/get_owners/`, config);
+            setOwnersData(response.data);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+    useEffect(() => {
+        getOwnersData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [show]);
+
+    return (
+        <>
+            <Table
+                height={400}
+                data={data}
+                onRowClick={rowData => {
+                    setSelectedOwnerData(rowData)
+                }}
+            >
+
+                <Column width={150}>
+                    <HeaderCell>First Name</HeaderCell>
+                    <EditableCell onChange={handleChange} dataKey="first_name" />
+                </Column>
+
+                <Column width={150}>
+                    <HeaderCell>Last Name</HeaderCell>
+                    <EditableCell onChange={handleChange} dataKey="last_name" />
+                </Column>
+
+                <Column width={150}>
+                    <HeaderCell>Phone Number</HeaderCell>
+                    <EditableCell onChange={handleChange} dataKey="phone_number" />
+                </Column>
+
+                <Column width={100}>
+                    <HeaderCell>Unit Number</HeaderCell>
+                    <EditableCell onChange={handleChange} dataKey="owner_of" />
+                </Column>
+
+                <Column width={150}>
+                    <HeaderCell>Maintenance Fees</HeaderCell>
+                    <EditableCell onChange={handleChange} dataKey="maintenance_fees" />
+                </Column>
+
+                <Column width={150}>
+                    <HeaderCell>Car Plate</HeaderCell>
+                    <EditableCell onChange={handleChange} dataKey="car_plate" />
+                </Column>
+
+                <Column width={80} fixed="right">
+                    <HeaderCell>Action</HeaderCell>
+                    <ActionCell dataKey="id" onClick={handleShow} />
+                </Column>
+            </Table>
+            <div style={{ padding: 20 }}>
+                <Pagination
+                    prev
+                    next
+                    first
+                    last
+                    ellipsis
+                    boundaryLinks
+                    maxButtons={5}
+                    size="xs"
+                    layout={['total', '-', 'limit', '|', 'pager', 'skip']}
+                    total={ownersData.length}
+                    limitOptions={[10, 30, 50]}
+                    limit={limit}
+                    activePage={page}
+                    onChangePage={setPage}
+                    onChangeLimit={handleChangeLimit}
+                />
+            </div>
+            <PayMaintenanceFeesFormModal handleClose={handleClose} show={show} ownerData={selectedOwnerData} />
+
+        </>
+    );
 };
 
-OwnerMaintenanceTable.defaultProps = {
-    ownerOrders: []
-};
-
-export default OwnerMaintenanceTable;
-
+export default OwnersDetailsTable
