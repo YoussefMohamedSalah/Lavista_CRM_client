@@ -29,21 +29,12 @@ const QrCodeManagment = () => {
   const [tabTwo, setTabTwo] = useState(false);
   const [tabThree, setTabThree] = useState(false);
   const [tabFour, setTabFour] = useState(false);
-
-  //   <ToggleButton
-  //   value="check"
-  //   selected={selected}
-  //   onChange={() => {
-  //     setSelected(!selected);
-  //   }}
-  // >
-  //   <CheckIcon />
-  // </ToggleButton>
+  
   return (
     <Page title="Qr Code">
       <div className="app-container" style={{ borderRadius: '15px' }} >
         <Stack flexDirection='column' className="app-header" >
-          <Box className="app-header-left" sx={{ alignSelf: 'start', padding: '2rem' }}>
+          <Box className="app-header-left" sx={{ alignSelf: 'start', padding: '2rem 1rem 0rem 1rem' }} >
             <span className="app-icon" />
             <p className="app-name">QR-Code Managment</p>
           </Box>

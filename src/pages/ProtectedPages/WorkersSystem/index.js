@@ -13,7 +13,7 @@ import OwnersDetails from './OwnersDetails'
 import OwnersFinance from './OwnersFinance';
 
 
-const OwnersManagment = () => {
+const WorkersManagment = () => {
   const [tab, setTab] = useState('OwnersDetails');
   const [view, setView] = useState('list');
 
@@ -33,7 +33,7 @@ const OwnersManagment = () => {
         <div className="app-header" style={{ width: '100%' }}>
           <div className="app-header-left" style={{ padding: '2rem 1rem 0rem 1rem' }}>
             <span className="app-icon" />
-            <p className="app-name">Owners Managment</p>
+            <p className="app-name">Workers Managment</p>
           </div>
         </div>
         {/* ------------------------------ */}
@@ -143,5 +143,5 @@ const OwnersManagment = () => {
     </Page >
   );
 };
-export default OwnersManagment;
+export default WorkersManagment;
 

@@ -6,6 +6,7 @@ import { Table, Pagination } from 'rsuite';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import AddNewUserModal from './AddNewUserModal';
+import PayMaintenanceFeesFormModal from './PayMaintenanceFeesFormModal';
 
 const { Column, HeaderCell, Cell } = Table;
 
@@ -29,15 +30,18 @@ const EditableCell = ({ rowData, dataKey, onChange, ...props }) => {
 };
 
 const ActionCell = ({ rowData, dataKey, onClick, ...props }) => {
+
+
     return (
         <Cell {...props} style={{ padding: '6px' }}>
             <Button
                 appearance="link"
                 onClick={() => {
                     onClick(rowData.id);
+                    console.log(rowData)
                 }}
             >
-                {rowData.status === 'EDIT' ? 'Save' : 'Edit'}
+                {rowData.status === 'Pay' ? 'Pay' : 'Pay'}
             </Button>
         </Cell>
     );
@@ -46,7 +50,6 @@ const ActionCell = ({ rowData, dataKey, onClick, ...props }) => {
 const OwnersDetailsTable = ({ show, handleShow, handleClose }) => {
     const [ownersData, setOwnersData] = useState([])
     const [selectedOwnerData, setSelectedOwnerData] = useState()
-    const [dataSaved, setDataSaved] = useState(false)
     const [limit, setLimit] = useState(10);
     const [page, setPage] = useState(1);
     // ----
@@ -73,23 +76,11 @@ const OwnersDetailsTable = ({ show, handleShow, handleClose }) => {
     const handleEditState = id => {
         const nextData = Object.assign([], ownersData);
         const activeItem = nextData.find(item => item.id === id);
-        activeItem.status = activeItem.status ? null : 'EDIT';
+        activeItem.status = activeItem.status ? null : 'Pay';
         setOwnersData(nextData);
-        setSelectedOwnerData(nextData)
-        // createNewOwner(nextData)
-        console.log(activeItem.status)
-        setDataSaved(true)
-        if (activeItem.status === null && dataSaved === true) {
-            EditOwnerData(nextData)
-            console.log('this sholud tregger the post request')
-        }
-        else {
-            console.log('this shold do nothing')
-        }
-
     };
-
     // getteing all Owners Data
+
     const userLogin = useSelector((state) => state.userLogin);
     const { userInfo } = userLogin;
     const config = {
@@ -113,24 +104,6 @@ const OwnersDetailsTable = ({ show, handleShow, handleClose }) => {
         getOwnersData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [show]);
-    useEffect(() => {
-        getOwnersData();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    // editing Selected Owner 
-    const EditOwnerData = async () => {
-        try {
-            console.log(selectedOwnerData.id)
-            await axios.post(`${process.env.REACT_APP_API_KEY}/api/edit_owner/${selectedOwnerData?.id}`, selectedOwnerData, config);
-            console.log(selectedOwnerData)
-            console.log('editing success')
-        } catch (err) {
-            console.log('error')
-            console.error(err);
-        }
-    };
-
 
     return (
         <>
@@ -174,7 +147,7 @@ const OwnersDetailsTable = ({ show, handleShow, handleClose }) => {
 
                 <Column width={80} fixed="right">
                     <HeaderCell>Action</HeaderCell>
-                    <ActionCell dataKey="id" onClick={handleEditState} />
+                    <ActionCell dataKey="id" onClick={handleShow} />
                 </Column>
             </Table>
             <div style={{ padding: 20 }}>
@@ -196,7 +169,8 @@ const OwnersDetailsTable = ({ show, handleShow, handleClose }) => {
                     onChangeLimit={handleChangeLimit}
                 />
             </div>
-            <AddNewUserModal handleClose={handleClose} show={show} handleShow={handleShow} ownerData={selectedOwnerData} />
+            <PayMaintenanceFeesFormModal handleClose={handleClose} show={show} ownerData={selectedOwnerData} />
+
         </>
     );
 };

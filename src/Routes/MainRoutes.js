@@ -22,12 +22,12 @@ import QrCodeManagment from '../pages/ProtectedPages/QrCodeSystem/QrCodeManagmen
 import OwnersManagment from '../pages/ProtectedPages/OwnersSystem';
 import NeedsManagment from '../pages/ProtectedPages/NeedsSystem/NeedsManagment';
 import PermissionsManagment from '../pages/ProtectedPages/PermissionsSystem/PermissionsManagment';
+import WorkersManagment from '../pages/ProtectedPages/WorkersSystem';
 
 //
 import User from '../pages/User';
 import FileMore from '../pages/FileAndMore';
 import Myprofile from '../pages/Myprofile';
-import WorkersManagment from '../pages/ProtectedPages/WorkersSystem/WorkersManagment';
 import Notifications from '../pages/Notification';
 import Savedpage from '../pages/Savedpage';
 import Myportifolio from '../pages/Myportifolio';
