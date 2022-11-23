@@ -86,6 +86,16 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
     getUserData();
   }, []);
 
+  // Chose Nav Config To Be Shown Depinding on user Type
+
+  const CheckUserType = () => {
+    console.log(userInfo)
+  }
+  CheckUserType()
+
+
+
+
   const renderContent = (
     <Scrollbar
       sx={{

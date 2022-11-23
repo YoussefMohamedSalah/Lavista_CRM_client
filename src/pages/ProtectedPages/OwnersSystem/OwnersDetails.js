@@ -49,7 +49,7 @@ function OwnersFinance() {
             <Grid item xl={12} xs={12}>
             </Grid>
             <Card sx={{ width: '100%' }}>
-                <OwnersDetailsTable show={show} handleClose={handleClose} handleShow={handleShow} />
+                <OwnersDetailsTable show={show} handleClose={handleClose} />
             </Card>
         </Stack>
     );

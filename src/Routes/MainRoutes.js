@@ -12,9 +12,10 @@ import Register from '../pages/Register';
 
 // open pages For UnSigned User
 import Home from '../pages/Home';
-import AboutUs from '../pages/OpenPages/AboutUs';
-import MainNotifications from '../pages/catpages/MainNotifications';
-import AboutLaVista from '../pages/OpenPages/AboutLaVista';
+// import AboutUs from '../pages/OpenPages/AboutUs';
+// import MainNotifications from '../pages/catpages/MainNotifications';
+// import AboutLaVista from '../pages/OpenPages/AboutLaVista';
+// import Test from '../Tests/Test';
 
 // Locked Pages
 import DashboardApp from '../pages/ProtectedPages/GeneralPages/DashboardApp';
@@ -36,8 +37,9 @@ import CreatorProfile from '../pages/CreatorPages/CreatorProfile';
 import CreatorStepper from '../pages/CreatorPages/CreatorStepper';
 import Wallet from '../pages/Wallet';
 import CoinsIndex from '../pages/CoinsComponents/CoinsIndex';
-import AllCreatorsPage from '../pages/CreatorPages/CreatorOpenPages/AllCreatorsPage';
-import Test from '../Tests/Test';
+// import AllCreatorsPage from '../pages/CreatorPages/CreatorOpenPages/AllCreatorsPage';
+
+// custom layouts
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -49,16 +51,16 @@ export default function Router() {
     },
 
     // here i should add Scanning Page To Be Aviliable For Every Scanner
-    {
-      path: '/open',
-      element: <MainLayout />,
-      children: [
-        { path: 'about_us', element: <AboutUs /> },
-        { path: 'main_notifications', element: <MainNotifications /> },
-        { path: 'about_la_vista', element: <AboutLaVista /> },
-        { path: 'test', element: <Test /> },
-      ],
-    },
+    // {
+    //   path: '/',
+    //   element: <MainLayout />,
+    //   children: [
+    //     { path: 'about_us', element: <AboutUs /> },
+    //     { path: 'main_notifications', element: <MainNotifications /> },
+    //     { path: 'about_la_vista', element: <AboutLaVista /> },
+    //     { path: 'test', element: <Test /> },
+    //   ],
+    // },
     {
       path: '/dashboard',
       element: <DashboardLayout />,

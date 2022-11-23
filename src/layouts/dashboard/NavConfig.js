@@ -3,6 +3,8 @@ import Iconify from '../../components/Iconify';
 
 // ----------------------------------------------------------------------
 
+
+
 const getIcon = (name) => <Iconify icon={name} width={22} height={22} />;
 // state:'disabled' for disabled link
 // state:'block' for visable & clickable link
@@ -49,37 +51,8 @@ const navConfig = [
     icon: getIcon('eva:settings-2-outline'),
     state: 'block',
   },
-  // {
-  //   title: 'My Profile',
-  //   path: '/dashboard/profile',
-  //   icon: getIcon('eva:file-text-outline'),
-  //   state: 'block',
-  // },
-  //  {
-  //   title: 'Downloads',
-  //   path: '/dashboard/saved',
-  //   icon: getIcon('eva:star-outline'),
-  //   state: 'block',
-  // },
-
-  // {
-  //   title: 'Notifications',
-  //   path: '/dashboard/notifications',
-  //   icon: getIcon('eva:bell-outline'),
-  //   state: 'disabled',
-  // },
-  // {
-  //   title: 'My Portfolio',
-  //   path: '/dashboard/portifolio',
-  //   icon: getIcon('eva:flag-outline'),
-  //   state: 'disabled',
-  // },
-
-  /* {
-    title: 'user',
-    path: '/dashboard/user',
-    icon: getIcon('eva:people-fill'),
-  }, */
 ];
+
+
 
 export default navConfig;

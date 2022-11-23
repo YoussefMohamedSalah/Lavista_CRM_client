@@ -135,8 +135,6 @@ const OwnersManagment = () => {
             {tab === 'OwnersFinance' ? (
               <OwnersFinance sx={{ width: '100%!important' }} />
             ) : null}
-            {/* {tab === 'qrcode_scan' ? <QrCodeScanner GroupTitle={'Scan QR Code'} StatusArray={StatusScan} /> : null}
-            {tab === 'qrcode_history' ? <QrCodeHistory /> : null} */}
           </Grid>
         </div>
       </div>

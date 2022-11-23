@@ -5,7 +5,7 @@ import Button from 'rsuite/Button';
 import { Table, Pagination } from 'rsuite';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
-import AddNewUserModal from './AddNewUserModal';
+import AddNewWorkerModal from './AddNewWorkerModal';
 
 const { Column, HeaderCell, Cell } = Table;
 
@@ -43,9 +43,9 @@ const ActionCell = ({ rowData, dataKey, onClick, ...props }) => {
     );
 };
 
-const OwnersDetailsTable = ({ show, handleShow, handleClose }) => {
-    const [ownersData, setOwnersData] = useState([])
-    const [selectedOwnerData, setSelectedOwnerData] = useState()
+const WorkersDetailsTable = ({ show, handleClose }) => {
+    const [workersData, setWorkersData] = useState([])
+    const [selectedWorkerData, setSelectedWorkerData] = useState()
     const [dataSaved, setDataSaved] = useState(false)
     const [limit, setLimit] = useState(10);
     const [page, setPage] = useState(1);
@@ -55,7 +55,7 @@ const OwnersDetailsTable = ({ show, handleShow, handleClose }) => {
         setLimit(dataKey);
     };
 
-    const data = ownersData.filter((v, i) => {
+    const data = workersData.filter((v, i) => {
         const start = limit * (page - 1);
         const end = start + limit;
         return i >= start && i < end;
@@ -65,22 +65,22 @@ const OwnersDetailsTable = ({ show, handleShow, handleClose }) => {
 
 
     const handleChange = (id, key, value) => {
-        const nextData = Object.assign([], ownersData);
+        const nextData = Object.assign([], workersData);
         nextData.find(item => item.id === id)[key] = value;
         // console.log(nextData)
-        setOwnersData(nextData);
+        setWorkersData(nextData);
     };
     const handleEditState = id => {
-        const nextData = Object.assign([], ownersData);
+        const nextData = Object.assign([], workersData);
         const activeItem = nextData.find(item => item.id === id);
         activeItem.status = activeItem.status ? null : 'EDIT';
-        setOwnersData(nextData);
-        setSelectedOwnerData(nextData)
+        setWorkersData(nextData);
+        setSelectedWorkerData(nextData)
         // createNewOwner(nextData)
         console.log(activeItem.status)
         setDataSaved(true)
         if (activeItem.status === null && dataSaved === true) {
-            EditOwnerData(nextData)
+            EditWorkerData(nextData)
             console.log('this sholud tregger the post request')
         }
         else {
@@ -99,31 +99,31 @@ const OwnersDetailsTable = ({ show, handleShow, handleClose }) => {
         },
     };
 
-    //  getting OwnersData 
-    const getOwnersData = async () => {
+    //  getting workersData 
+    const getWorkersData = async () => {
         try {
             const response = await axios.get(
-                `${process.env.REACT_APP_API_KEY}/api/get_owners/`, config);
-            setOwnersData(response.data);
+                `${process.env.REACT_APP_API_KEY}/api/get_workers/`, config);
+            setWorkersData(response.data);
         } catch (err) {
             console.error(err);
         }
     };
     useEffect(() => {
-        getOwnersData();
+        getWorkersData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [show]);
     useEffect(() => {
-        getOwnersData();
+        getWorkersData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // editing Selected Owner 
-    const EditOwnerData = async () => {
+    const EditWorkerData = async () => {
         try {
-            console.log(selectedOwnerData.id)
-            await axios.post(`${process.env.REACT_APP_API_KEY}/api/edit_owner/${selectedOwnerData?.id}`, selectedOwnerData, config);
-            console.log(selectedOwnerData)
+            console.log(selectedWorkerData.id)
+            await axios.post(`${process.env.REACT_APP_API_KEY}/api/edit_worker/${selectedWorkerData?.id}`, selectedWorkerData, config);
+            console.log(selectedWorkerData)
             console.log('editing success')
         } catch (err) {
             console.log('error')
@@ -138,16 +138,16 @@ const OwnersDetailsTable = ({ show, handleShow, handleClose }) => {
                 height={400}
                 data={data}
                 onRowClick={rowData => {
-                    setSelectedOwnerData(rowData)
+                    setSelectedWorkerData(rowData)
                 }}
             >
 
-                <Column width={150}>
+                <Column width={140}>
                     <HeaderCell>First Name</HeaderCell>
                     <EditableCell onChange={handleChange} dataKey="first_name" />
                 </Column>
 
-                <Column width={150}>
+                <Column width={140}>
                     <HeaderCell>Last Name</HeaderCell>
                     <EditableCell onChange={handleChange} dataKey="last_name" />
                 </Column>
@@ -157,20 +157,30 @@ const OwnersDetailsTable = ({ show, handleShow, handleClose }) => {
                     <EditableCell onChange={handleChange} dataKey="phone_number" />
                 </Column>
 
-                <Column width={100}>
-                    <HeaderCell>Unit Number</HeaderCell>
-                    <EditableCell onChange={handleChange} dataKey="owner_of" />
+                <Column width={200}>
+                    <HeaderCell>Id Number</HeaderCell>
+                    <EditableCell onChange={handleChange} dataKey="id_number" />
                 </Column>
 
                 <Column width={150}>
-                    <HeaderCell>Maintenance Fees</HeaderCell>
-                    <EditableCell onChange={handleChange} dataKey="maintenance_fees" />
+                    <HeaderCell>Working Section</HeaderCell>
+                    <EditableCell onChange={handleChange} dataKey="working_section" />
                 </Column>
 
                 <Column width={150}>
+                    <HeaderCell>Start At</HeaderCell>
+                    <EditableCell onChange={handleChange} dataKey="start_working_data" />
+                </Column>
+                <Column width={150}>
+                    <HeaderCell>Left At</HeaderCell>
+                    <EditableCell onChange={handleChange} dataKey="finish_working_data" />
+                </Column>
+
+                {/* <Column width={150}>
                     <HeaderCell>Car Plate</HeaderCell>
-                    <EditableCell onChange={handleChange} dataKey="car_plate" />
-                </Column>
+                    <EditableCell onChange={handleChange} dataKey="reason_to_leave" />
+                </Column>       
+              */}
 
                 <Column width={80} fixed="right">
                     <HeaderCell>Action</HeaderCell>
@@ -188,7 +198,7 @@ const OwnersDetailsTable = ({ show, handleShow, handleClose }) => {
                     maxButtons={5}
                     size="xs"
                     layout={['total', '-', 'limit', '|', 'pager', 'skip']}
-                    total={ownersData.length}
+                    total={workersData.length}
                     limitOptions={[10, 30, 50]}
                     limit={limit}
                     activePage={page}
@@ -196,9 +206,9 @@ const OwnersDetailsTable = ({ show, handleShow, handleClose }) => {
                     onChangeLimit={handleChangeLimit}
                 />
             </div>
-            <AddNewUserModal handleClose={handleClose} show={show} handleShow={handleShow} ownerData={selectedOwnerData} />
+            <AddNewWorkerModal handleClose={handleClose} show={show} />
         </>
     );
 };
 
-export default OwnersDetailsTable
+export default WorkersDetailsTable

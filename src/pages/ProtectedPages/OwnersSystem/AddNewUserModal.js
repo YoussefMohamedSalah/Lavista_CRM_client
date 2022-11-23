@@ -19,7 +19,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 
-export default function AddNewUserModal({ show, handleShow, handleClose }) {
+export default function AddNewUserModal({ show, handleClose }) {
     const [open, setOpen] = useState(false);
     const userLogin = useSelector((state) => state.userLogin);
     const { userInfo } = userLogin;

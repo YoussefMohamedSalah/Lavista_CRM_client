@@ -43,7 +43,7 @@ const ActionCell = ({ rowData, dataKey, onClick, ...props }) => {
     );
 };
 
-const OwnersDetailsTable = ({ show, handleShow, handleClose }) => {
+const OwnersDetailsTable = ({ show, handleClose }) => {
     const [ownersData, setOwnersData] = useState([])
     const [selectedOwnerData, setSelectedOwnerData] = useState()
     const [dataSaved, setDataSaved] = useState(false)
@@ -196,7 +196,7 @@ const OwnersDetailsTable = ({ show, handleShow, handleClose }) => {
                     onChangeLimit={handleChangeLimit}
                 />
             </div>
-            <AddNewUserModal handleClose={handleClose} show={show} handleShow={handleShow} ownerData={selectedOwnerData} />
+            <AddNewUserModal handleClose={handleClose} show={show} ownerData={selectedOwnerData} />
         </>
     );
 };

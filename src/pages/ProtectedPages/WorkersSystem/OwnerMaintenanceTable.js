@@ -5,7 +5,7 @@ import Button from 'rsuite/Button';
 import { Table, Pagination } from 'rsuite';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
-import AddNewUserModal from './AddNewUserModal';
+import AddNewUserModal from './AddNewWorkerModal';
 import PayMaintenanceFeesFormModal from './PayMaintenanceFeesFormModal';
 
 const { Column, HeaderCell, Cell } = Table;

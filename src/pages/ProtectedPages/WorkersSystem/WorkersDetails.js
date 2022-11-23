@@ -4,11 +4,11 @@
 import { Button, Grid, Stack, Typography, Card } from '@mui/material';
 import PageTitleWrapper from 'src/components/PageTitleWrapper';
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
-import OwnersDetailsTable from './OwnersDetailsTable';
+import WorkersDetailsTable from './WorkersDetailsTable';
 import { useState } from 'react';
 
 
-function OwnersFinance() {
+function WorkersDetails() {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -27,9 +27,10 @@ function OwnersFinance() {
                         <Grid container justifyContent="space-between" alignItems="center">
                             <Grid item>
                                 <Typography variant="h3" component="h3" gutterBottom>
-                                    Owners Details                                </Typography>
+                                    WorkersDetails
+                                </Typography>
                                 <Typography variant="subtitle2">
-                                    Here All About Owners Details
+                                    Here All About Workers Details
                                 </Typography>
                             </Grid>
                             <Grid item>
@@ -39,7 +40,7 @@ function OwnersFinance() {
                                     startIcon={<AddTwoToneIcon fontSize="small" />}
                                     onClick={() => handleShow()}
                                 >
-                                    Add New Owner
+                                    Add New Worker
                                 </Button>
                             </Grid>
                         </Grid>
@@ -49,9 +50,9 @@ function OwnersFinance() {
             <Grid item xl={12} xs={12}>
             </Grid>
             <Card sx={{ width: '100%' }}>
-                <OwnersDetailsTable show={show} handleClose={handleClose} handleShow={handleShow} />
+                <WorkersDetailsTable show={show} handleClose={handleClose} />
             </Card>
         </Stack>
     );
 };
-export default OwnersFinance;
+export default WorkersDetails;

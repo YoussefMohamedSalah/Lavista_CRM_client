@@ -9,12 +9,12 @@ import { Icon } from '@iconify/react';
 
 
 import Page from '../../../components/Page';
-import OwnersDetails from './OwnersDetails'
+import WorkersDetails from './WorkersDetails'
 import OwnersFinance from './OwnersFinance';
 
 
 const WorkersManagment = () => {
-  const [tab, setTab] = useState('OwnersDetails');
+  const [tab, setTab] = useState('WorkersDetails');
   const [view, setView] = useState('list');
 
   const handleChange = (event, nextView) => {
@@ -46,7 +46,7 @@ const WorkersManagment = () => {
               className={tabOne === true ? 'app-sidebar-link active' : 'app-sidebar-link'}
               onClick={() => {
                 setTabOne(true);
-                setTab('OwnersDetails');
+                setTab('WorkersDetails');
 
                 setTabTwo(false);
                 setTabFour(false);
@@ -129,14 +129,12 @@ const WorkersManagment = () => {
             </Box>
           </Box>
           <Grid item xl={12} lg={12} md={12} sm={12} xs={12} sx={{ width: '100%' }}>
-            {tab === 'OwnersDetails' ? (
-              <OwnersDetails sx={{ width: '100%!important' }} />
+            {tab === 'WorkersDetails' ? (
+              <WorkersDetails sx={{ width: '100%!important' }} />
             ) : null}
             {tab === 'OwnersFinance' ? (
               <OwnersFinance sx={{ width: '100%!important' }} />
             ) : null}
-            {/* {tab === 'qrcode_scan' ? <QrCodeScanner GroupTitle={'Scan QR Code'} StatusArray={StatusScan} /> : null}
-            {tab === 'qrcode_history' ? <QrCodeHistory /> : null} */}
           </Grid>
         </div>
       </div>

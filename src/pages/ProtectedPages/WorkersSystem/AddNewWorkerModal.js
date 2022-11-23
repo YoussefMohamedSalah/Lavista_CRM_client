@@ -19,7 +19,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 
-export default function AddNewUserModal({ show, handleShow, handleClose }) {
+export default function AddNewWorkerModal({ show, handleClose }) {
     const [open, setOpen] = useState(false);
     const userLogin = useSelector((state) => state.userLogin);
     const { userInfo } = userLogin;
@@ -40,9 +40,9 @@ export default function AddNewUserModal({ show, handleShow, handleClose }) {
         }, 3000);
     };
     // ---------------------------------------------------------------------------------------
-    const createNewOwner = async (values) => {
+    const createNewWorker = async (values) => {
         try {
-            await axios.post(`${process.env.REACT_APP_API_KEY}/api/create_owner`, values, config);
+            await axios.post(`${process.env.REACT_APP_API_KEY}/api/create_worker`, values, config);
             console.log(values)
         } catch (err) {
             console.log('error')
@@ -55,23 +55,23 @@ export default function AddNewUserModal({ show, handleShow, handleClose }) {
         {
             first_name: '',
             last_name: '',
-            owner_of: '',
-            maintenance_fees: '',
             phone_number: '',
-            car_plate: ''
+            id_number: '',
+            working_section: '',
+            start_working_data: '',
         }
         ,
         validationSchema: Yup.object({
             first_name: Yup.string().required().max(40, 'limit passed').min(1, 'min 1 word'),
             last_name: Yup.string().required().max(40, 'limit passed').min(1, 'min 1 word'),
-            owner_of: Yup.string().required(),
-            maintenance_fees: Yup.number(),
             phone_number: Yup.number(),
-            car_plate: Yup.string(),
+            id_number: Yup.number(),
+            working_section: Yup.string().required(),
+            start_working_data: Yup.string(),
         }),
 
         onSubmit: (values) => {
-            createNewOwner(values);
+            createNewWorker(values);
             formHandler()
         },
     });
@@ -83,11 +83,11 @@ export default function AddNewUserModal({ show, handleShow, handleClose }) {
             <form autoComplete="off" onSubmit={formik.handleSubmit}>
                 <Modal show={show} onHide={handleClose} centered>
                     <Modal.Header closeButton>
-                        <Modal.Title>Add New Owner</Modal.Title>
+                        <Modal.Title>Add New Worker</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <Card>
-                            <CardHeader subheader="Please Make Sure Inputs Are Correct" title="Owner Info" />
+                            <CardHeader subheader="Please Make Sure Inputs Are Correct" title="Worker Info" />
                             <Collapse in={open}>
                                 <Alert
                                     action={
@@ -104,7 +104,7 @@ export default function AddNewUserModal({ show, handleShow, handleClose }) {
                                     }
                                     sx={{ mb: 2 }}
                                 >
-                                    Owner Added Successfuly
+                                    Worker Added Successfuly
                                 </Alert>
                             </Collapse>
                             <Divider />
@@ -134,7 +134,7 @@ export default function AddNewUserModal({ show, handleShow, handleClose }) {
                                             onChange={formik.handleChange}
                                             required
                                             autoComplete='off'
-                                            placeholder={formik.values.last_name || "0"}
+                                            placeholder={formik.values.last_name || ""}
                                             value={formik.values.last_name}
                                             onBlur={formik.handleBlur}
                                             variant="outlined"
@@ -145,29 +145,12 @@ export default function AddNewUserModal({ show, handleShow, handleClose }) {
                                     <Grid item md={12} xs={12}>
                                         <TextField
                                             fullWidth
-                                            label="Unit Number"
-                                            name="owner_of"
-                                            onChange={formik.handleChange}
-                                            required
-                                            autoComplete='off'
-                                            placeholder={formik.values.owner_of || "0"}
-                                            value={formik.values.owner_of}
-                                            onBlur={formik.handleBlur}
-                                            variant="outlined"
-                                        />
-                                        {formik.touched.owner_of && formik.errors.owner_of && <p>{formik.errors.owner_of}</p>}
-
-                                    </Grid>
-
-                                    <Grid item md={12} xs={12}>
-                                        <TextField
-                                            fullWidth
-                                            label="Phone Number"
+                                            label="phone Number"
                                             name="phone_number"
                                             onChange={formik.handleChange}
                                             required
                                             autoComplete='off'
-                                            placeholder={formik.values.phone_number || "0"}
+                                            placeholder={formik.values.phone_number || ""}
                                             value={formik.values.phone_number}
                                             onBlur={formik.handleBlur}
                                             variant="outlined"
@@ -179,33 +162,50 @@ export default function AddNewUserModal({ show, handleShow, handleClose }) {
                                     <Grid item md={12} xs={12}>
                                         <TextField
                                             fullWidth
-                                            label="Maintenance Fees"
-                                            name="maintenance_fees"
+                                            label="Phone Number"
+                                            name="id_number"
                                             onChange={formik.handleChange}
                                             required
                                             autoComplete='off'
-                                            placeholder={formik.values.maintenance_fees || "0"}
-                                            value={formik.values.maintenance_fees}
+                                            placeholder={formik.values.id_number || ""}
+                                            value={formik.values.id_number}
                                             onBlur={formik.handleBlur}
                                             variant="outlined"
                                         />
-                                        {formik.touched.maintenance_fees && formik.errors.maintenance_fees && <p>{formik.errors.maintenance_fees}</p>}
+                                        {formik.touched.id_number && formik.errors.id_number && <p>{formik.errors.id_number}</p>}
+
+                                    </Grid>
+
+                                    <Grid item md={12} xs={12}>
+                                        <TextField
+                                            fullWidth
+                                            label="Working_Section"
+                                            name="working_section"
+                                            onChange={formik.handleChange}
+                                            required
+                                            autoComplete='off'
+                                            placeholder={formik.values.working_section || ""}
+                                            value={formik.values.working_section}
+                                            onBlur={formik.handleBlur}
+                                            variant="outlined"
+                                        />
+                                        {formik.touched.working_section && formik.errors.working_section && <p>{formik.errors.working_section}</p>}
 
                                     </Grid>
                                     <Grid item md={12} xs={12}>
                                         <TextField
                                             fullWidth
-                                            label="Car Plate"
-                                            name="car_plate"
+                                            label="Start Working Date"
+                                            name="start_working_data"
                                             onChange={formik.handleChange}
                                             required
                                             autoComplete='off'
-                                            placeholder={formik.values.car_plate || "0"}
-                                            value={formik.values.car_plate}
+                                            placeholder={formik.values.start_working_data || "0"}
+                                            value={formik.values.start_working_data}
                                             onBlur={formik.handleBlur}
                                             variant="outlined"
                                         />
-                                        {formik.touched.car_plate && formik.errors.car_plate && <p>{formik.errors.car_plate}</p>}
+                                        {formik.touched.start_working_data && formik.errors.start_working_data && <p>{formik.errors.start_working_data}</p>}
 
                                     </Grid>
                                 </Grid>
@@ -218,7 +218,7 @@ export default function AddNewUserModal({ show, handleShow, handleClose }) {
                             Cancel
                         </Button>
                         <Button onClick={() => formik.handleSubmit()} variant="contained" type="submit">
-                            👉 Add New Owner
+                            👉 Add New Worker
                         </Button>
                     </Modal.Footer>
                 </Modal>
