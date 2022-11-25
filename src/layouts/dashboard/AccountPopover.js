@@ -11,7 +11,7 @@ import { LOGOUT } from '../../redux/types/auth';
 // components
 import MenuPopover from '../../components/MenuPopover';
 import CreatorBtn from '../../components/Btns/CreatorBtn/CreatorBtn';
-import WalletIcon from '../../components/Btns/CreatorBtn/WalletIcon';
+// import WalletIcon from '../../components/Btns/CreatorBtn/WalletIcon';
 // mocks_
 import account from '../../_mock/account';
 
@@ -93,7 +93,7 @@ export default function AccountPopover() {
   }, []);
   return (
     <>
-      {userInfo ? (
+      {/* {userInfo ? (
         <Stack direction="row">
           <WalletIcon />
         </Stack>
@@ -101,7 +101,7 @@ export default function AccountPopover() {
         <Box sx={{ paddingRight: '1rem' }}>
           <CreatorBtn btnContent={'Login'} path={'/login'} />
         </Box>
-      )}
+      )} */}
       <IconButton
         ref={anchorRef}
         onClick={handleOpen}

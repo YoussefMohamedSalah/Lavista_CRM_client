@@ -15,7 +15,7 @@ import useResponsive from '../../hooks/useResponsive';
 import Logo from '../../components/Logo';
 import Scrollbar from '../../components/Scrollbar';
 import NavSection from '../../components/NavSection';
-import CreatorGroupBtn from '../../components/Btns/CreatorBtn/CreatorGroupBtn';
+// import CreatorGroupBtn from '../../components/Btns/CreatorBtn/CreatorGroupBtn';
 
 //
 import navConfig from './NavConfig';
@@ -148,7 +148,6 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
           }}
         >
           {renderContent}
-          <CreatorGroupBtn userData={userData} />
         </Drawer>
       )}
     </RootStyle>
