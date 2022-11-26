@@ -49,18 +49,6 @@ export default function Router() {
       element: <MoreLayout />,
       children: [{ path: ':id', element: <FileMore /> }],
     },
-
-    // here i should add Scanning Page To Be Aviliable For Every Scanner
-    // {
-    //   path: '/',
-    //   element: <MainLayout />,
-    //   children: [
-    //     { path: 'about_us', element: <AboutUs /> },
-    //     { path: 'main_notifications', element: <MainNotifications /> },
-    //     { path: 'about_la_vista', element: <AboutLaVista /> },
-    //     { path: 'test', element: <Test /> },
-    //   ],
-    // },
     {
       path: '/dashboard',
       element: <DashboardLayout />,

@@ -24,10 +24,10 @@ export default function App() {
     <FilesContext.Provider value={{ searchInput, setSearchInput }}>
       <StyledEngineProvider injectFirst>
         <CssBaseline />
-          <MainThemeProvider>
-            <ScrollToTop />
-            <Router />
-          </MainThemeProvider>
+        <MainThemeProvider>
+          <ScrollToTop />
+          <Router />
+        </MainThemeProvider>
       </StyledEngineProvider>
     </FilesContext.Provider>
   );

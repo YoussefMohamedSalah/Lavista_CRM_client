@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
@@ -18,7 +19,9 @@ import NavSection from '../../components/NavSection';
 // import CreatorGroupBtn from '../../components/Btns/CreatorBtn/CreatorGroupBtn';
 
 //
-import navConfig from './NavConfig';
+// import navConfig from './NavConfig';
+import Iconify from '../../components/Iconify';
+
 
 // ----------------------------------------------------------------------
 
@@ -47,6 +50,57 @@ DashboardSidebar.propTypes = {
 };
 
 export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
+  const getIcon = (name) => <Iconify icon={name} width={22} height={22} />;
+  // navConfig Constantse
+  const navConfig = [
+    {
+      title: 'Main Wall',
+      path: '/dashboard/app',
+      icon: getIcon('eva:activity-outline'),
+      state: 'block',
+    },
+    {
+      // mentanace === QrCode Managment $
+      title: 'QrCode Managment',
+      path: '/dashboard/qr_managment',
+      icon: getIcon('bi:qr-code'),
+      state: 'block',
+    },
+    {
+      // demand-and-needs === Needs Managment $
+      title: 'Needs Managment',
+      path: '/dashboard/needs_managment',
+      icon: getIcon('grommet-icons:resources'),
+      state: 'block',
+    },
+    {
+      // mentanace-and-accounts === Financials Managment $
+      title: 'Owners Managment',
+      path: '/dashboard/owners_managment',
+      icon: getIcon('material-symbols:location-home'),
+      state: 'block',
+    },
+    {
+      // Liked === Workers Managment $
+      title: 'Workers Managment',
+      path: '/dashboard/workers_managment',
+      icon: getIcon('eva:people-outline'),
+      state: 'block',
+    },
+    {
+      // mybord === Permissions Managment $
+      title: 'Permissions Managment',
+      path: '/dashboard/permissions_managment',
+      icon: getIcon('eva:settings-2-outline'),
+      state: 'block',
+    },
+  ];
+
+
+
+
+
+  // ----------------------------------------------------------------------------------
   const [userData, setUserData] = useState({});
   const BlankPofile = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png';
   const userLogin = useSelector((state) => state.userLogin);
@@ -86,12 +140,31 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
     getUserData();
   }, []);
 
-  // Chose Nav Config To Be Shown Depinding on user Type
 
-  const CheckUserType = () => {
-    console.log(userInfo)
+  // ----------------------------------------------------------
+  // Nav Config Function
+  const getNavOnUserType = () => {
+    if (userInfo) {
+      const navConfig = [{
+        title: 'Permissions Managment',
+        path: '/dashboard/permissions_managment',
+        icon: getIcon('eva:settings-2-outline'),
+        state: 'block',
+      }]
+      return navConfig
+    }
   }
-  CheckUserType()
+  getNavOnUserType()
+  console.log(getNavOnUserType())
+
+
+
+
+
+
+
+
+
 
 
 
@@ -123,7 +196,10 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
         </Link>
       </Box>
 
-      <NavSection navConfig={navConfig} />
+
+
+
+      <NavSection navConfig={getNavOnUserType()} />
 
       <Box sx={{ flexGrow: 1 }} />
 

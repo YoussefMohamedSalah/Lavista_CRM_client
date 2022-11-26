@@ -2,7 +2,7 @@
 /* eslint-disable react/button-has-type */
 // components
 import { Box, Grid } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 // icons
 import { Icon } from '@iconify/react';
 // import { NavLink as RouterLink } from 'react-router-dom';
@@ -11,6 +11,9 @@ import { Icon } from '@iconify/react';
 import Page from '../../../components/Page';
 import OwnersDetails from './OwnersDetails'
 import OwnersFinance from './OwnersFinance';
+import { useSelector } from 'react-redux';
+// import { Navigate } from 'react-router';
+import { useNavigate } from 'react-router';
 
 
 const OwnersManagment = () => {
@@ -25,6 +28,21 @@ const OwnersManagment = () => {
   const [tabTwo, setTabTwo] = useState(false);
   const [tabThree, setTabThree] = useState(false);
   const [tabFour, setTabFour] = useState(false);
+
+
+
+  // --------------------
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  const Navigate = useNavigate()
+
+  // useEffect(() => {
+  //   if (userInfo?.user_type === 'user') {
+  //     Navigate('/home')
+  //   }
+  //   console.log(userInfo)
+  // }, [])
 
   return (
     <Page title="Owners" sx={{ width: '100%!important' }}>

@@ -160,10 +160,10 @@ export default function NavSection({ navConfig, ...other }) {
   const match = (path) => (path ? !!matchPath({ path, end: false }, pathname) : false);
 
   return (
-    <motion.Box {...other} initial={{ y: -50 }} animate={{ y: 0 }} transition={{delay: 0, duration: 0.5, type: 'spring' ,stiffness: 50}}     >
+    <motion.Box {...other} initial={{ y: -50 }} animate={{ y: 0 }} transition={{ delay: 0, duration: 0.5, type: 'spring', stiffness: 50 }}     >
       <List disablePadding sx={{ p: 1 }}>
         {navConfig.map((item) => (
-          <NavItem key={item.title} {...item.state} item={item} active={match} />
+          <NavItem key={item.title} {...item.state} item={item} active={match} onClick={() => console.log(item.state)} />
         ))}
       </List>
     </motion.Box>

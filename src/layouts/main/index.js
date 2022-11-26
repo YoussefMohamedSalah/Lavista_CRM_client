@@ -1,13 +1,8 @@
-import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 
 // material
 import { styled } from '@mui/material/styles';
-//
-import DashboardNavbar from './DashboardNavbar';
-import DashboardSidebar from './DashboardSidebar';
-
 // ----------------------------------------------------------------------
 
 const APP_BAR_MOBILE = 64;
@@ -35,13 +30,9 @@ const MainStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function MainLayout() {
-  const [open, setOpen] = useState(false);
-
   return (
     <AnimatePresence wait>
       <RootStyle>
-        <DashboardNavbar onOpenSidebar={() => setOpen(true)} />
-        <DashboardSidebar isOpenSidebar={open} onCloseSidebar={() => setOpen(false)} />
         <MainStyle>
           <Outlet />
         </MainStyle>
