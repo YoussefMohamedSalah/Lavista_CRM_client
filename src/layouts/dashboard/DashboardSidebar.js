@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
-import { Box, Link, Button, Drawer, Typography, Avatar, Stack } from '@mui/material';
+import { Box, Link, Drawer, Typography, Avatar } from '@mui/material';
 
 import axios from 'axios';
 import { useSelector } from 'react-redux';
@@ -16,10 +16,7 @@ import useResponsive from '../../hooks/useResponsive';
 import Logo from '../../components/Logo';
 import Scrollbar from '../../components/Scrollbar';
 import NavSection from '../../components/NavSection';
-// import CreatorGroupBtn from '../../components/Btns/CreatorBtn/CreatorGroupBtn';
 
-//
-// import navConfig from './NavConfig';
 import Iconify from '../../components/Iconify';
 
 
@@ -50,63 +47,14 @@ DashboardSidebar.propTypes = {
 };
 
 export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
-  const getIcon = (name) => <Iconify icon={name} width={22} height={22} />;
-  // navConfig Constantse
-  const navConfig = [
-    {
-      title: 'Main Wall',
-      path: '/dashboard/app',
-      icon: getIcon('eva:activity-outline'),
-      state: 'block',
-    },
-    {
-      // mentanace === QrCode Managment $
-      title: 'QrCode Managment',
-      path: '/dashboard/qr_managment',
-      icon: getIcon('bi:qr-code'),
-      state: 'block',
-    },
-    {
-      // demand-and-needs === Needs Managment $
-      title: 'Needs Managment',
-      path: '/dashboard/needs_managment',
-      icon: getIcon('grommet-icons:resources'),
-      state: 'block',
-    },
-    {
-      // mentanace-and-accounts === Financials Managment $
-      title: 'Owners Managment',
-      path: '/dashboard/owners_managment',
-      icon: getIcon('material-symbols:location-home'),
-      state: 'block',
-    },
-    {
-      // Liked === Workers Managment $
-      title: 'Workers Managment',
-      path: '/dashboard/workers_managment',
-      icon: getIcon('eva:people-outline'),
-      state: 'block',
-    },
-    {
-      // mybord === Permissions Managment $
-      title: 'Permissions Managment',
-      path: '/dashboard/permissions_managment',
-      icon: getIcon('eva:settings-2-outline'),
-      state: 'block',
-    },
-  ];
-
-
-
-
-
   // ----------------------------------------------------------------------------------
-  const [userData, setUserData] = useState({});
+  const getIcon = (name) => <Iconify icon={name} width={22} height={22} />;
+  const [userData, setUserData] = useState();
+  const [userType, setUserType] = useState()
   const BlankPofile = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png';
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
   const { pathname } = useLocation();
-
   const isDesktop = useResponsive('up', 'lg');
 
   useEffect(() => {
@@ -115,6 +63,111 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
+
+  const getNavConfigContent = () => {
+    if (userType === "super_manager") {
+      const content = [
+        {
+          title: "Main Wall ",
+          path: "/dashboard/app",
+          icon: getIcon("eva:activity-outline"),
+          state: "blok",
+        },
+        {
+          // mentanace === QrCode Managment $
+          title: "QrCode Managment",
+          path: "/dashboard/qr_managment",
+          icon: getIcon("bi:qr-code"),
+          state: "block",
+        },
+        {
+          // demand-and-needs === Needs Managment $
+          title: "Needs Managment",
+          path: "/dashboard/needs_managment",
+          icon: getIcon("grommet-icons:resources"),
+          state: "block",
+        },
+        {
+          // mentanace-and-accounts === Financials Managment $
+          title: "Owners Managment",
+          path: "/dashboard/owners_managment",
+          icon: getIcon("material-symbols:location-home"),
+          state: "block",
+        },
+        {
+          // Liked === Workers Managment $
+          title: "Workers Managment",
+          path: "/dashboard/workers_managment",
+          icon: getIcon("eva:people-outline"),
+          state: "block",
+        },
+        {
+          // mybord === Permissions Managment $
+          title: "Permissions Managment",
+          path: "/dashboard/permissions_managment",
+          icon: getIcon("eva:settings-2-outline"),
+          state: "block",
+        },
+      ]
+      return <NavSection navConfig={content} />
+    }    // if Workers Manager
+    else if (userType === "workers_managment") {
+      const content = [{
+        title: "Workers Managment",
+        path: "/dashboard/workers_managment",
+        icon: getIcon("eva:people-outline"),
+        state: "block",
+      }]
+      return <NavSection navConfig={content} />
+    }
+    // if owners Financials Manager
+    else if (userType === "owners_managment") {
+      const content = [{
+        title: "Owners Managment",
+        path: "/dashboard/owners_managment",
+        icon: getIcon("material-symbols:location-home"),
+        state: "block",
+      }]
+      return <NavSection navConfig={content} />
+    }
+    // if Qr Code Manager
+    else if (userType === "qrcode_managment") {
+      const content = [{
+        title: "QrCode Managment",
+        path: "/dashboard/qr_managment",
+        icon: getIcon("bi:qr-code"),
+        state: "block",
+      }]
+      return <NavSection navConfig={content} />
+    }
+    // if workers Manager
+    else if (userType === "workers_managment") {
+      const content = [{
+        title: "QrCode Managment",
+        path: "/dashboard/qr_managment",
+        icon: getIcon("bi:qr-code"),
+        state: "block",
+      }]
+      return <NavSection navConfig={content} />
+    }
+    else if (userType === "user") {
+      const content = [{
+        title: "Not Authorized yet",
+        path: "/home",
+        icon: getIcon("bi:home-outline"),
+        state: "block",
+      }]
+      return <NavSection navConfig={content} />
+    } else {
+      const content = [{
+        title: "Not Authorized yet",
+        path: "/home",
+        icon: getIcon("bi:home-outline"),
+        state: "block",
+      }]
+      return <NavSection navConfig={content} />
+    }
+  }
 
   // -----------------------------------
   // Data after sending the token Validation__Authorization
@@ -128,46 +181,19 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
   const getUserData = async () => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_KEY}/api/v1/accounts/user-details/${userInfo?.id}`,
+        `${process.env.REACT_APP_API_KEY}/api/get_user/${userInfo?.id}`,
         config
       );
       setUserData(response?.data);
+      setUserType(response?.data.user_type)
     } catch (err) {
       console.error(err);
     }
   };
   useEffect(() => {
     getUserData();
+    getNavConfigContent();
   }, []);
-
-
-  // ----------------------------------------------------------
-  // Nav Config Function
-  const getNavOnUserType = () => {
-    if (userInfo) {
-      const navConfig = [{
-        title: 'Permissions Managment',
-        path: '/dashboard/permissions_managment',
-        icon: getIcon('eva:settings-2-outline'),
-        state: 'block',
-      }]
-      return navConfig
-    }
-  }
-  getNavOnUserType()
-  console.log(getNavOnUserType())
-
-
-
-
-
-
-
-
-
-
-
-
 
   const renderContent = (
     <Scrollbar
@@ -195,19 +221,8 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
           </AccountStyle>
         </Link>
       </Box>
-
-
-
-
-      <NavSection navConfig={getNavOnUserType()} />
-
+      {getNavConfigContent()}
       <Box sx={{ flexGrow: 1 }} />
-
-      {/* <Box sx={{ px: 2.5, pb: 3, mt: 10 }}>
-        <Stack alignItems="center" spacing={3} sx={{ pt: 5, borderRadius: 2, position: 'relative' }}>
-          <Box component="img" src={logo} sx={{ width: 300, position: 'absolute', top: -150 }} />
-        </Stack>
-      </Box> */}
     </Scrollbar>
   );
 

@@ -46,7 +46,7 @@ export default function LoginForm() {
 
   useEffect(() => {
     if (userInfo) {
-      navigate('/home', { replace: true });
+      navigate('/dashboard', { replace: true });
     }
   }, [navigate, userInfo]);
 
