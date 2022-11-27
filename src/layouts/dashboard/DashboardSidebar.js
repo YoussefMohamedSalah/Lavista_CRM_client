@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
-import { Box, Link, Drawer, Typography, Avatar } from '@mui/material';
+import { Box, Link, Drawer, Typography, Avatar, Stack } from '@mui/material';
 
 import axios from 'axios';
 import { useSelector } from 'react-redux';
@@ -50,7 +50,8 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
   // ----------------------------------------------------------------------------------
   const getIcon = (name) => <Iconify icon={name} width={22} height={22} />;
   const [userData, setUserData] = useState();
-  const [userType, setUserType] = useState()
+  const [userType, setUserType] = useState();
+  const [villageName, setVillageName] = useState();
   const BlankPofile = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png';
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -61,7 +62,6 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
     if (isOpenSidebar) {
       onCloseSidebar();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   const getNavConfigContent = () => {
@@ -71,7 +71,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
           title: "Main Wall ",
           path: "/dashboard/app",
           icon: getIcon("eva:activity-outline"),
-          state: "blok",
+          state: "block",
         },
         {
           // mentanace === QrCode Managment $
@@ -110,7 +110,54 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
         },
       ]
       return <NavSection navConfig={content} />
-    }    // if Workers Manager
+    }
+    if (userType === "village_manager") {
+      const content = [
+        {
+          title: "Main Wall ",
+          path: "/dashboard/app",
+          icon: getIcon("eva:activity-outline"),
+          state: "block",
+        },
+        {
+          // mentanace === QrCode Managment $
+          title: "QrCode Managment",
+          path: "/dashboard/qr_managment",
+          icon: getIcon("bi:qr-code"),
+          state: "block",
+        },
+        {
+          // demand-and-needs === Needs Managment $
+          title: "Needs Managment",
+          path: "/dashboard/needs_managment",
+          icon: getIcon("grommet-icons:resources"),
+          state: "block",
+        },
+        {
+          // mentanace-and-accounts === Financials Managment $
+          title: "Owners Managment",
+          path: "/dashboard/owners_managment",
+          icon: getIcon("material-symbols:location-home"),
+          state: "block",
+        },
+        {
+          // Liked === Workers Managment $
+          title: "Workers Managment",
+          path: "/dashboard/workers_managment",
+          icon: getIcon("eva:people-outline"),
+          state: "block",
+        },
+        {
+          // mybord === Permissions Managment $
+          title: "Permissions Managment",
+          path: "/dashboard/permissions_managment",
+          icon: getIcon("eva:settings-2-outline"),
+          state: "block",
+        },
+      ]
+      return <NavSection navConfig={content} />
+    }
+    // if Workers Manager
     else if (userType === "workers_managment") {
       const content = [{
         title: "Workers Managment",
@@ -185,7 +232,8 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
         config
       );
       setUserData(response?.data);
-      setUserType(response?.data.user_type)
+      setUserType(response?.data.user_type);
+      setVillageName(response?.data.village_name);
     } catch (err) {
       console.error(err);
     }
@@ -210,14 +258,21 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
         <Link underline="none" component={RouterLink} to="#">
           <AccountStyle>
             <Avatar
-              src={userInfo ? `${process.env.REACT_APP_API_KEY}${userData?.avatarUrl}` : BlankPofile}
+              src={userInfo.avatarUrl ? `${process.env.REACT_APP_API_KEY}${userData?.avatarUrl}` : BlankPofile}
               alt="photoURL"
             />
-            <Box sx={{ ml: 2 }}>
-              <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                {userInfo ? <>{userInfo.first_name} {userInfo.last_name}</> : 'John Doe'}
-              </Typography>
-            </Box>
+            <Stack direction='column'>
+              <Box sx={{ ml: 2 }}>
+                <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
+                  {userInfo ? <>{userInfo.first_name} {userInfo.last_name}</> : 'John Doe'}
+                </Typography>
+              </Box>
+              <Box sx={{ ml: 2 }}>
+                <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
+                  {villageName ? <>{villageName}</> : 'lavista'}
+                </Typography>
+              </Box>
+            </Stack>
           </AccountStyle>
         </Link>
       </Box>

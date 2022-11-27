@@ -13,6 +13,7 @@ import * as Yup from 'yup';
 import { useSelector } from 'react-redux';
 import UploadImage from '../../../components/Form/UploadImage';
 import Page from '../../../components/Page';
+import UserEditForm from '../../../components/Form/UserEditForm';
 // ----------------------------------------------------------------------
 
 export default function PermissionsManagment() {
@@ -54,7 +55,7 @@ export default function PermissionsManagment() {
       company: Yup.string(),
     }),
 
-    onSubmit: (values) => {},
+    onSubmit: (values) => { },
   });
 
   return (
@@ -63,13 +64,14 @@ export default function PermissionsManagment() {
         <Typography variant="h4" sx={{ mb: 5 }}>
           {/* Hi, Welcome {userFirstName[0]} 👋 */}
           <br />
-          Manage Your Account Here.
+          Manage Your Accounts Here.
         </Typography>
         {/* <Box>
           <Row>
             <UploadImage />
           </Row>
         </Box> */}
+        <UserEditForm />
       </Container>
     </Page>
   );

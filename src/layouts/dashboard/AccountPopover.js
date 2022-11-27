@@ -43,6 +43,9 @@ export default function AccountPopover() {
   const navigate = useNavigate();
   const anchorRef = useRef(null);
 
+  const [userType, setUserType] = useState();
+  const [villageName, setVillageName] = useState();
+
   const [open, setOpen] = useState(null);
 
   const handleOpen = (event) => {
@@ -65,7 +68,7 @@ export default function AccountPopover() {
 
   const logoutHandler = () => {
     dispatch(logout());
-    navigate('/Home');
+    navigate('/login');
   };
 
   // -----------------------------------
@@ -80,10 +83,12 @@ export default function AccountPopover() {
   const getUserData = async () => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_KEY}/api/v1/accounts/user-details/${userInfo?.id}`,
+        `${process.env.REACT_APP_API_KEY}/api/get_user/${userInfo?.id}`,
         config
       );
       setUserData(response?.data);
+      setUserType(response?.data.user_type);
+      setVillageName(response?.data.village_name);
     } catch (err) {
       console.error(err);
     }
@@ -121,7 +126,7 @@ export default function AccountPopover() {
         }}
       >
         <Avatar
-          src={userInfo ? `${process.env.REACT_APP_API_KEY}${userData?.avatarUrl}` : account.photoURL}
+          src={userInfo.avatarUrl ? `${process.env.REACT_APP_API_KEY}${userData?.avatarUrl}` : account.photoURL}
           alt="photoURL"
         />
       </IconButton>
@@ -144,8 +149,8 @@ export default function AccountPopover() {
           <Typography variant="subtitle2" noWrap>
             {userInfo ? <>{userInfo.first_name} {userInfo.last_name}</> : 'John Doe'}
           </Typography>
-          <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {userInfo ? <>{userInfo.email}</> : 'email@email.com'}
+          <Typography variant="subtitle2" sx={{ color: 'text.primary', alignSelf: 'center' }}>
+            {userType ? <>{userType}</> : 'user'}
           </Typography>
         </Box>
 
