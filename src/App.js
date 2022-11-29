@@ -1,34 +1,22 @@
-// context
-import React, { useState } from 'react';
-import { CssBaseline, StyledEngineProvider } from '@mui/material';
+import { useRoutes } from 'react-router-dom';
+import router from 'src/router';
 
-import { FilesContext } from './Contexts/filesContext';
-// routes
-import Router from './Routes/MainRoutes';
-// theme
-import MainThemeProvider from './theme';
-// components
-import ScrollToTop from './components/ScrollToTop';
-// CDN's
-import 'bootstrap/dist/css/bootstrap.min.css';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
 
-// ----------------------------------------------------------------------
+import { CssBaseline } from '@mui/material';
+import ThemeProvider from './theme/ThemeProvider';
 
-export default function App() {
-  // the value that will be given to the context
-  const [searchInput, setSearchInput] = useState('');
-  // ------------------------------------------------
-
+function App() {
+  const content = useRoutes(router);
 
   return (
-    <FilesContext.Provider value={{ searchInput, setSearchInput }}>
-      <StyledEngineProvider injectFirst>
+    <ThemeProvider>
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
         <CssBaseline />
-        <MainThemeProvider>
-          <ScrollToTop />
-          <Router />
-        </MainThemeProvider>
-      </StyledEngineProvider>
-    </FilesContext.Provider>
+        {content}
+      </LocalizationProvider>
+    </ThemeProvider>
   );
 }
+export default App;

@@ -1,8 +1,7 @@
 /* eslint-disable react/button-has-type */
 import React from 'react';
 import './CustomBtn.css';
-import { Typography, Box } from '@mui/material';
-import { Link as RouterLink } from 'react-router-dom';
+import { Typography } from '@mui/material';
 
 const CustomBtn = ({ btnContent }) => (
   <button className="button-89">

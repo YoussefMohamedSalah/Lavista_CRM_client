@@ -1,36 +1,25 @@
-// scroll bar
-import 'simplebar/src/simplebar.css';
-
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
-
-// ** Redux Imports
+import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
+
+import 'nprogress/nprogress.css';
+import App from 'src/App';
 import store from './redux/store';
-
-//
-import App from './App';
-import * as serviceWorker from './serviceWorker';
-import reportWebVitals from './reportWebVitals';
-
-// ----------------------------------------------------------------------
+import { SidebarProvider } from 'src/contexts/SidebarContext';
+import * as serviceWorker from 'src/serviceWorker';
 
 ReactDOM.render(
   <HelmetProvider>
-    <BrowserRouter>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </BrowserRouter>
+    <SidebarProvider>
+      <BrowserRouter>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </BrowserRouter>
+    </SidebarProvider>
   </HelmetProvider>,
   document.getElementById('root')
 );
 
-// If you want to enable client cache, register instead.
 serviceWorker.unregister();
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
