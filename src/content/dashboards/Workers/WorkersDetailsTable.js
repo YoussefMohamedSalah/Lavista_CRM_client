@@ -103,8 +103,10 @@ const WorkersDetailsTable = ({ show, handleClose }) => {
     const getWorkersData = async () => {
         try {
             const response = await axios.get(
-                `${process.env.REACT_APP_API_KEY}/api/get_workers/`, config);
-            setWorkersData(response.data);
+                `${process.env.REACT_APP_API_KEY}/api/${userInfo.village_Id}/get_workers/`, config);
+            // console.log(response)
+            // const workersArray = response.data.map((village) => village.workers)
+            setWorkersData(response.data.workers);
         } catch (err) {
             console.error(err);
         }

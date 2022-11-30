@@ -6,6 +6,7 @@ import PageTitleWrapper from 'src/components/PageTitleWrapper';
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
 import WorkersDetailsTable from './WorkersDetailsTable';
 import { useState } from 'react';
+import AddNewWorkerModal from './AddNewWorkerModal';
 
 
 function WorkersDetails() {
@@ -48,8 +49,9 @@ function WorkersDetails() {
                 </Grid>
             </PageTitleWrapper>
             <Card sx={{ width: '100%' }}>
-                <WorkersDetailsTable show={show} handleClose={handleClose} />
+                <WorkersDetailsTable handleClose={handleClose} />
             </Card>
+            <AddNewWorkerModal show={show} />
         </Stack>
     );
 };

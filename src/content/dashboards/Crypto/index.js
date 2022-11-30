@@ -33,6 +33,7 @@ function DashboardCrypto() {
 
   useEffect(() => {
     CheckUserType()
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
 

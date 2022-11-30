@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 
 import React, { useEffect, useState } from 'react';
 import '../styles.css';
@@ -102,8 +103,9 @@ const OwnersDetailsTable = ({ show, handleClose }) => {
     const getOwnersData = async () => {
         try {
             const response = await axios.get(
-                `${process.env.REACT_APP_API_KEY}/api/get_owners/`, config);
-            setOwnersData(response.data);
+                `${process.env.REACT_APP_API_KEY}/api/${userInfo?.village_Id}/get_owners/`, config);
+            const ownersArray = response.data.map((village) => village.owners)
+            setOwnersData(ownersArray[0]);
         } catch (err) {
             console.error(err);
         }
@@ -114,7 +116,6 @@ const OwnersDetailsTable = ({ show, handleClose }) => {
     useEffect(() => {
         getOwnersData();
     }, []);
-
     // editing Selected Owner 
     const EditOwnerData = async () => {
         try {

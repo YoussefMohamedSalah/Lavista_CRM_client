@@ -24,6 +24,7 @@ function QrCodeScanner({ GroupTitle, StatusArray }) {
 
   useEffect(() => {
     getDataFromQrCode();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   return (

@@ -1,5 +1,5 @@
 import { Box, Grid } from '@mui/material';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../NeedsManagment.scss';
 
 // icons
@@ -14,7 +14,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 
 
-const index = () => {
+const Index = () => {
   const [tab, setTab] = useState('WorkersDetails');
   const [tabOne, setTabOne] = useState(true);
   const [tabTwo, setTabTwo] = useState(false);
@@ -39,6 +39,7 @@ const index = () => {
 
   useEffect(() => {
     CheckUserType()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -156,7 +157,7 @@ const index = () => {
     </ >
   );
 };
-export default index;
+export default Index;
 
 
 

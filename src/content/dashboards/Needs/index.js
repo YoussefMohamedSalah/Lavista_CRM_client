@@ -10,7 +10,7 @@ import { Icon } from '@iconify/react';
 
 
 
-const index = () => {
+const Index = () => {
   const [tab, setTab] = useState('qrcode_landing');
   const [tabOne, setTabOne] = useState(true);
   const [tabTwo, setTabTwo] = useState(false);
@@ -18,7 +18,7 @@ const index = () => {
   const [tabFour, setTabFour] = useState(false);
   // data for wedget Group,, And for every single widget
 
-  const StatusArray = [
+  const statusArray = [
     { title: 'Hello', value: '26' },
     { title: 'world', value: '43' },
     { title: 'good', value: '76' },
@@ -195,12 +195,12 @@ const index = () => {
           <Grid container>
             <Grid item xl={8} lg={8} md={9} sm={12} xs={12}>
               {tab === 'qrcode_landing' ? (
-                <WidgetsGroub GroupTitle={'Statistics'} WidgetData={WidgetData} StatusArray={StatusArray} />
+                <WidgetsGroub GroupTitle={'Statistics'} WidgetData={WidgetData} StatusArray={statusArray} />
               ) : null}
               {tab === 'generate_qrcode' ? (
-                <WidgetsGroub GroupTitle={'Generate QR Code'} StatusArray={StatusArray} />
+                <WidgetsGroub GroupTitle={'Generate QR Code'} StatusArray={statusArray} />
               ) : null}
-              {tab === 'qrcode_scan' ? <WidgetsGroub GroupTitle={'Scan QR Code'} StatusArray={StatusArray} /> : null}
+              {tab === 'qrcode_scan' ? <WidgetsGroub GroupTitle={'Scan QR Code'} StatusArray={statusArray} /> : null}
               {tab === 'qrcode_history' ? <WidgetsGroub /> : null}
             </Grid>
             <Grid item xl={4} lg={4} md={3} sm={12} xs={12}>
@@ -212,4 +212,4 @@ const index = () => {
     </div>
   );
 };
-export default index;
+export default Index;

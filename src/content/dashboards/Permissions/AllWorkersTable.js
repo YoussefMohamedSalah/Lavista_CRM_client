@@ -5,7 +5,7 @@ import Button from 'rsuite/Button';
 import { Table, Pagination } from 'rsuite';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
-import AddPermissionsModal from './AddPermissionsModal'
+import SelectedWorkerPermissionModal from './SelectedWorkerPermisssionModal';
 
 const { Column, HeaderCell, Cell } = Table;
 
@@ -24,13 +24,17 @@ const ActionCell = ({ rowData, dataKey, onClick, ...props }) => {
     );
 };
 
-const AllWorkersTable = () => {
+function AllWorkersTable() {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleShow = () => {
+        setShow(true)
+        console.log('cliked')
+        console.log(show)
+    };
     // ------------------------------
     const [workersData, setWorkersData] = useState([])
-    const [selectedWorkerData, setSelectedWorkerData] = useState()
+    const [selectedWorkerId, setSelectedWorkerId] = useState()
     const [limit, setLimit] = useState(10);
     const [page, setPage] = useState(1);
     // ----
@@ -47,18 +51,8 @@ const AllWorkersTable = () => {
 
 
 
-
-    const handleChange = (id, key, value) => {
-        const nextData = Object.assign([], workersData);
-        nextData.find(item => item.id === id)[key] = value;
-        setWorkersData(nextData);
-    };
     const handleEditState = id => {
-        const nextData = Object.assign([], workersData);
-        const activeItem = nextData.find(item => item.id === id);
-        activeItem.status = activeItem.status ? null : 'EDIT';
-        setWorkersData(nextData);
-        setSelectedWorkerData(nextData)
+        setSelectedWorkerId(id)
         handleShow()
     };
 
@@ -78,6 +72,7 @@ const AllWorkersTable = () => {
             const response = await axios.get(
                 `${process.env.REACT_APP_API_KEY}/api/get_workers/`, config);
             setWorkersData(response.data);
+            console.log(response.data)
         } catch (err) {
             console.error(err);
         }
@@ -98,47 +93,53 @@ const AllWorkersTable = () => {
                 height={400}
                 data={data}
                 onRowClick={rowData => {
-                    setSelectedWorkerData(rowData)
+                    console.log(rowData);
                 }}
             >
-
                 <Column width={140}>
                     <HeaderCell>First Name</HeaderCell>
-                    <Cell onChange={handleChange} dataKey="first_name" />
+                    <Cell dataKey="first_name" />
                 </Column>
 
                 <Column width={140}>
                     <HeaderCell>Last Name</HeaderCell>
-                    <Cell onChange={handleChange} dataKey="last_name" />
+                    <Cell dataKey="last_name" />
                 </Column>
 
                 <Column width={150}>
                     <HeaderCell>Phone Number</HeaderCell>
-                    <Cell onChange={handleChange} dataKey="phone_number" />
+                    <Cell dataKey="phone_number" />
                 </Column>
 
                 <Column width={200}>
                     <HeaderCell>Id Number</HeaderCell>
-                    <Cell onChange={handleChange} dataKey="id_number" />
+                    <Cell dataKey="id_number" />
                 </Column>
 
                 <Column width={150}>
                     <HeaderCell>Working Section</HeaderCell>
-                    <Cell onChange={handleChange} dataKey="working_section" />
+                    <Cell dataKey="working_section" />
                 </Column>
 
                 <Column width={150}>
                     <HeaderCell>Start At</HeaderCell>
-                    <Cell onChange={handleChange} dataKey="start_working_data" />
+                    <Cell dataKey="start_working_data" />
                 </Column>
                 <Column width={150}>
                     <HeaderCell>Left At</HeaderCell>
-                    <Cell onChange={handleChange} dataKey="finish_working_data" />
+                    <Cell dataKey="finish_working_data" />
                 </Column>
 
                 <Column width={80} fixed="right">
-                    <HeaderCell>Action</HeaderCell>
-                    <ActionCell dataKey="id" onClick={handleEditState} />
+                    <HeaderCell>...</HeaderCell>
+
+                    <Cell>
+                        {rowData => (
+                            <span>
+                                <a onClick={() => handleEditState(rowData.id)}> Edit </a>
+                            </span>
+                        )}
+                    </Cell>
                 </Column>
             </Table>
             <div style={{ padding: 20 }}>
@@ -160,7 +161,7 @@ const AllWorkersTable = () => {
                     onChangeLimit={handleChangeLimit}
                 />
             </div>
-            <AddPermissionsModal WorkerData={selectedWorkerData} show={show} handleClose={handleClose} />
+            <SelectedWorkerPermissionModal WorkerId={selectedWorkerId} show={show} handleClose={handleClose} />
         </>
     );
 };

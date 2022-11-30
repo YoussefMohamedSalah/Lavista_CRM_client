@@ -117,14 +117,15 @@ function Permissions() {
   const getWorkersWithPermissions = async () => {
     try {
       const data = await axios.get(
-        `${process.env.REACT_APP_API_KEY}/api/1/get_workers`,
+        `${process.env.REACT_APP_API_KEY}/api/${userInfo?.village_Id}/get_workers_with_permission`,
         config
       );
-      const workersArray = data.data.workers;
-      const newWithPermissionArray = workersArray?.filter(function (el) {
-        return el.has_permission === true;
-      });
-      setWorkersWithPermissions(newWithPermissionArray);
+      console.log(data)
+      // const workersArray = data.data.workers;
+      // const newWithPermissionArray = workersArray?.filter(function (el) {
+      //   return el.has_permission === true;
+      // });
+      setWorkersWithPermissions(data.data);
     } catch (err) {
       console.error(err);
     }
@@ -132,6 +133,7 @@ function Permissions() {
 
   useEffect(() => {
     getWorkersWithPermissions()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -197,7 +199,7 @@ function Permissions() {
           <Tooltip arrow title="Click to add a new Worker">
             <CardAddAction>
               <CardActionArea
-                onClick={() => handleShow()}
+                onClick={handleShow}
                 sx={{
                   px: 1
                 }}

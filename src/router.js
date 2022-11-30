@@ -5,7 +5,7 @@ import SidebarLayout from 'src/layouts/SidebarLayout';
 import BaseLayout from 'src/layouts/BaseLayout';
 
 import SuspenseLoader from 'src/components/SuspenseLoader';
-import Myprofile from './content/Profile';
+// import Myprofile from './content/Profile';
 
 const Loader = (Component) => (props) =>
 (
@@ -164,15 +164,15 @@ const routes = [
       {
         path: 'messenger',
         element: <Messenger />
-      }, 
+      },
       {
         path: 'qr_code',
         element: <QrCode />
       },
-      {
-        path: 'gate',
-        element: <Myprofile />
-      }
+      // {
+      //   path: 'gate',
+      //   element: <Myprofile />
+      // }
     ]
   },
   {

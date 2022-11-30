@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable arrow-body-style */
 /* eslint-disable react/button-has-type */
 import { Box, Grid, Stack } from '@mui/material';

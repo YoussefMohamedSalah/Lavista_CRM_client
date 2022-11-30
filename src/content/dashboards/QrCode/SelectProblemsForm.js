@@ -572,6 +572,7 @@ export default function CheckboxesGroup({ ScannedData }) {
 
   React.useEffect(() => {
     CheckType();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ScannedData]);
 
   const handleChange = (id) => {

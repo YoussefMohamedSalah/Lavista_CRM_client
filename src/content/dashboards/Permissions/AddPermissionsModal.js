@@ -1,3 +1,5 @@
+
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Modal, Table, Button } from 'rsuite';
 import React, { useEffect, useState } from 'react';
 import AddPermissionsForm from './AddPermissionsForm';
@@ -51,6 +53,7 @@ const AddPermissionsModal = ({
 }) => {
     const userLogin = useSelector((state) => state.userLogin);
     const { userInfo } = userLogin;
+    console.log(userInfo?.village_Id)
     const config = {
         headers: {
             'Content-type': 'application/json',
@@ -62,7 +65,7 @@ const AddPermissionsModal = ({
     // -----worker select state--------------
     const [workerSelected, setWorkerSelected] = useState(false)
     // -----All Workers Data-----------------
-    const [workersData, setWorkersData] = useState()
+    const [workersData, setWorkersData] = useState([])
     // --------------------------------------
     const data = workersData?.filter((v, i) => {
         const start = 10 * (1 - 1);
@@ -80,22 +83,16 @@ const AddPermissionsModal = ({
         setWorkerSelected(false)
     }, [handleClose])
 
-    console.log(selectedWorkerData)
-
 
 
 
     const getWorkersWithPermissions = async () => {
         try {
-            const data = await axios.get(
-                `${process.env.REACT_APP_API_KEY}/api/1/get_workers`,
+            const response = await axios.get(
+                `${process.env.REACT_APP_API_KEY}/api/${userInfo?.village_Id}/get_workers`,
                 config
             );
-            const workersArray = data.data.workers;
-            const newWithoutPermissionArray = workersArray?.filter(function (el) {
-                return el.has_permission === false;
-            });
-            setWorkersData(newWithoutPermissionArray);
+            setWorkersData(response.data.workers);
         } catch (err) {
             console.error(err);
         }

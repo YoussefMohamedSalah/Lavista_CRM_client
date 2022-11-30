@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable arrow-body-style */
 /* eslint-disable react/button-has-type */
 // components
@@ -33,11 +34,10 @@ function OwnersFinance() {
     const getOwnersData = async () => {
         try {
             const response = await axios.get(
-                `${process.env.REACT_APP_API_KEY}/api/get_owners/`, config);
-            setOwnersData(response.data);
+                `${process.env.REACT_APP_API_KEY}/api/${userInfo?.village_Id}/get_owners/`, config);
+            const ownersArray = response.data.map((village) => village.owners)
+            setOwnersData(ownersArray[0]);
         } catch (err) {
-            console.log(userInfo)
-
             console.error(err);
         }
     };

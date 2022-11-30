@@ -10,7 +10,7 @@ const data = ['qr_code_manager', 'owners_manager', 'workers_manager', 'gate_mana
     item => ({ label: item, value: item })
 );
 
-const AddPermissionsForm = ({ selectedWorkerData, handleClose, handleCloseAndSuccess }) => {
+const AddPermissionsForm = ({ workerData, handleClose, handleCloseAndSuccess }) => {
     const userLogin = useSelector((state) => state.userLogin);
     const { userInfo } = userLogin;
     const config = {
@@ -36,13 +36,10 @@ const AddPermissionsForm = ({ selectedWorkerData, handleClose, handleCloseAndSuc
             last_name: selectedWorkerData?.last_name,
             loggin: loggin,
             password: password,
-            phone_number: selectedWorkerData?.phone_number,
-            village_name: "la VIsta 6",
-            has_permission: true,
             permission_type: userType
         }
         try {
-            await axios.post(`${process.env.REACT_APP_API_KEY}/auth/signup`, values, config);
+            await axios.post(`${process.env.REACT_APP_API_KEY}/auth/signup/${userInfo.village_Id}`, values, config);
             console.log(values)
             handleCloseAndSuccess()
         } catch (err) {
@@ -75,7 +72,7 @@ const AddPermissionsForm = ({ selectedWorkerData, handleClose, handleCloseAndSuc
 
                 <Form.Group>
                     <ButtonToolbar>
-                        <Button onClick={() => addNewWorkerPermission(selectedWorkerData)} appearance="primary">Submit</Button>
+                        <Button onClick={() => addNewWorkerPermission(workerData)} appearance="primary">Submit</Button>
                         <Button appearance="default" onClick={() => handleClose()}>Cancel</Button>
                     </ButtonToolbar>
                 </Form.Group>
