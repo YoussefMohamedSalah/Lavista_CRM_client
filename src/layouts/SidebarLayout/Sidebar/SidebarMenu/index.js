@@ -245,6 +245,58 @@ function SidebarMenu() {
             </SubMenuWrapper>
           </List>
 
+
+
+
+
+
+          <SubMenuWrapper>
+            <List component="div">
+              <ListItem component="div">
+                <Button
+                  disableRipple
+                  component={RouterLink}
+                  onClick={closeSidebar}
+                  to="/dashboard/center_managment"
+                  startIcon={<AccountCircleTwoToneIcon />}
+                >
+                  Dashboard
+                </Button>
+              </ListItem>
+            </List>
+          </SubMenuWrapper>
+
+          <SubMenuWrapper>
+            <List component="div">
+              <ListItem component="div">
+                <Button
+                  disableRipple
+                  component={RouterLink}
+                  onClick={closeSidebar}
+                  to="/dashboard/calendar"
+                  startIcon={<AccountCircleTwoToneIcon />}
+                >
+                  Calendar
+                </Button>
+              </ListItem>
+            </List>
+          </SubMenuWrapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
           {/* if Village Manager */}
           {villageManager && (
             <List

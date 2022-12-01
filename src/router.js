@@ -22,12 +22,14 @@ const Login = Loader(lazy(() => import('src/content/pages/Login')));
 
 // Dashboard
 
+const SuperManagment = Loader(lazy(() => import('src/content/dashboards/SuperManagment')));
 const Crypto = Loader(lazy(() => import('src/content/dashboards/Crypto')));
 const Owners = Loader(lazy(() => import('src/content/dashboards/Owners')));
 const Needs = Loader(lazy(() => import('src/content/dashboards/Needs')));
 const Workers = Loader(lazy(() => import('src/content/dashboards/Workers')));
 const Permissions = Loader(lazy(() => import('src/content/dashboards/Permissions')));
 const QrCode = Loader(lazy(() => import('src/content/dashboards/QrCode')))
+const Calendar = Loader(lazy(() => import('src/components/Calendar/Calendar')))
 
 
 
@@ -144,6 +146,14 @@ const routes = [
       {
         path: 'crypto',
         element: <Crypto />
+      },
+      {
+        path: 'center_managment',
+        element: <SuperManagment />
+      },
+      {
+        path: 'calendar',
+        element: <Calendar />
       },
       {
         path: 'owners',

@@ -48,6 +48,7 @@ export default function QrCodeGenerator({ GroupTitle, StatusArray }) {
   };
   // --------------------------
   const [qrcodeList, setQrcodeList] = useState([]);
+  console.log(qrcodeList)
 
   const generateQrCode = async () => {
     const finalText = `${Village}/${inputValue}/${inputValueForSubCategory}/${text}`;
