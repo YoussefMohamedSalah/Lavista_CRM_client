@@ -1,15 +1,27 @@
 /* eslint-disable react/button-has-type */
 import { Box } from '@mui/material';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import BuildCircleIcon from '@mui/icons-material/BuildCircle';
 import { currentDate } from '../../../utils/currentDate'
 
 const Widget = ({ Category }) => {
+  const [percentage, setPercentage] = useState(null)
   const allItemsCounter = Category.items_count;
   const underRapairItemsCouter = Category.under_repair_items_count;
   const goodItemsCounter = Number(allItemsCounter) - Number(underRapairItemsCouter);
-  const percentage = (goodItemsCounter / allItemsCounter) * 100;
+  // calculating Percentage
+  const getPercentage = () => {
+    if (allItemsCounter !== 0) {
+      const percentage = (Number(goodItemsCounter) / Number(allItemsCounter) * 100);
+      setPercentage(percentage.toFixed(1))
+    } else {
+      setPercentage(0)
+    }
+  }
+  useEffect(() => {
+    getPercentage()
+  }, [])
 
   return (
     <>
@@ -77,7 +89,7 @@ const Widget = ({ Category }) => {
           </div>
           <div className="project-box-footer">
             <div className="participants">
-              <p className="box-progress-percentage">{percentage.toFixed(1)} %</p>
+              <p className="box-progress-percentage">{percentage} %</p>
             </div>
             <Box className="days-left" style={{ color: '', cursor: 'pointer' }}>
               {/* 2 Days Left */}

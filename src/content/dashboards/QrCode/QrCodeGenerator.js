@@ -32,7 +32,8 @@ import { useSelector } from 'react-redux';
 export default function QrCodeGenerator({
   GroupTitle,
   CategoriesData,
-  villageQrcodeList
+  villageQrcodeList,
+  setReGet
 }) {
 
   const userLogin = useSelector((state) => state.userLogin);
@@ -62,43 +63,6 @@ export default function QrCodeGenerator({
     setInputValueSubCategory('');
   }, [categoryValue]);
   // -------------------------------------------------------------------------------------------------
-  // const [categoryItems, setCategoryItems] = useState([]);
-  // const determanSubCategory = async (val) => {
-  //   console.log(val)
-  //   try {
-  //     const response = await axios.get(
-  //       `${process.env.REACT_APP_API_KEY}/api/${userInfo?.village_Id}/${val}/items`,
-  //       config
-  //     );
-  //     setCategoryItems(response.data);
-  //     console.log(val);
-  //     console.log(response.data);
-  //     console.log(
-  //       '----------------------------------------------------------------'
-  //     );
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-
-  // if (value === 'Mechanics') {
-  //   return MechanicsOptions;
-  // } else if (value === 'Electronics') {
-  //   return ElectricityOptions;
-  // } else if (value === 'Ls') {
-  //   return AgriculturalOptions;
-  // } else if (value === 'Net') {
-  //   return NetworksOptions;
-  // } else if (value === 'Cam') {
-  //   return CamerasOptions;
-  // } else if (value === 'Pool') {
-  //   return poolsOptions;
-  // } else {
-  //   return [];
-  // }
-  // };
-
-
-  // --------------------------
   const [qrcodeList, setQrcodeList] = useState([]);
   // -----------------------------------------------------
 
@@ -125,7 +89,7 @@ export default function QrCodeGenerator({
     const finalText = `${villageQrcodeList.village}/${categoryValue}/${itemValue}/${text}`;
     const date = new Date();
     const uniqId = date.getTime();
-
+    setReGet(date)
     if (categoryValue) {
       try {
         await axios.post(

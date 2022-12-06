@@ -4,7 +4,6 @@ import React from 'react';
 import Widget from './Widget';
 
 const WidgetsGroub = ({ GroupTitle, CategoriesData, villageQrcodeList }) => {
-  console.log(CategoriesData)
   return (
     <>
       {/* widgets section---------------------------------------------- */}

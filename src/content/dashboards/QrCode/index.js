@@ -62,9 +62,9 @@ const QrCodeManagment = () => {
       console.error(err);
     }
   };
-  useEffect(() => {
-    getQrcodeLIstData();
-  }, []);
+  // useEffect(() => {
+  //   getQrcodeLIstData();
+  // }, []);
   // -----*-----*------*------Get Categories Data*-----*-----*-----*-----*-----
   const getCategories = async () => {
     try {
@@ -78,25 +78,15 @@ const QrCodeManagment = () => {
       console.error(err);
     }
   };
+  // useEffect(() => {
+  //   getCategories();
+  // }, []);
+  // -----*-----*------*------*-----*-----*-----*-----*-----*-----
+  const [reGet, setReGet] = useState(null)
   useEffect(() => {
     getCategories();
-  }, []);
-  // -----*-----*------*------*-----*-----*-----*-----*-----*-----
-  // -----*-----*------*------Get Categories Data*-----*-----*-----*-----*-----
-  // const getCategoriesData = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       `${process.env.REACT_APP_API_KEY}/api/${userInfo?.village_Id}/get_items`,
-  //       config
-  //     );
-  //     setVillageCategoriesData(response.data);
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // };
-  // useEffect(() => {
-  //   getCategoriesData();
-  // }, []);
+    getQrcodeLIstData();
+  }, [reGet])
   // -----*-----*------*------*-----*-----*-----*-----*-----*-----
   return (
     <Box sx={{ minWidth: '100%important' }}>
@@ -235,6 +225,7 @@ const QrCodeManagment = () => {
                     GroupTitle={'Statistics'}
                     WidgetData={WidgetLandingData}
                     CategoriesData={villageCategoriesData}
+                    setReGet={setReGet}
                   />
                 ) : null}
                 {tab === 'generate_qrcode' ? (
@@ -243,6 +234,7 @@ const QrCodeManagment = () => {
                     StatusArray={StatusGenerate}
                     CategoriesData={villageCategoriesData}
                     villageQrcodeList={villageQrcodeList}
+                    setReGet={setReGet}
                   />
                 ) : null}
                 {tab === 'qrcode_scan' ? (
