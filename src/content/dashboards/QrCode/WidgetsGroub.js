@@ -1,33 +1,10 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable arrow-body-style */
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Widget from './Widget';
 
-const WidgetsGroub = ({ GroupTitle, StatusArray, WidgetData }) => {
-  const [data, setData] = useState()
-  console.log(data)
-
-  // -----*-----*------*------Get Category Data*-----*-----*-----*-----*-----
-
-  const getAllCategories = async () => {
-    try {
-      const data = await axios.get(`${process.env.REACT_APP_API_KEY}/api/category`);
-      setData(data.data)
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  // -----*-----*------*------*-----*-----*-----*-----*-----*-----
-
-  useEffect(() => {
-    getAllCategories();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // -----*-----*------*------*-----*-----*-----*-----*-----*-----
-
+const WidgetsGroub = ({ GroupTitle, CategoriesData, villageQrcodeList }) => {
+  console.log(CategoriesData)
   return (
     <>
       {/* widgets section---------------------------------------------- */}
@@ -38,16 +15,32 @@ const WidgetsGroub = ({ GroupTitle, StatusArray, WidgetData }) => {
         </div>
         <div className="projects-section-line">
           <div className="projects-status">
-            {StatusArray?.map((status) => (
-              <>
-                <div className="item-status">
-                  <span className="status-number" style={{ color: `${status.styleColor}` }}>
-                    {status.value}
-                  </span>
-                  <span className="status-type">{status.title}</span>
-                </div>
-              </>
-            ))}
+            {/* /------------------------------------------------------ */}
+            <>
+              <div className="item-status">
+                <span className="status-number" style={{ color: '#1f1c2e' }}>
+                  {villageQrcodeList?.allItemsCount}
+                </span>
+                <span className="status-type">All Items</span>
+              </div>
+            </>
+            <>
+              <div className="item-status">
+                <span className="status-number" style={{ color: '#34c471' }}>
+                  {villageQrcodeList?.goodItemsCount}
+                </span>
+                <span className="status-type">Good Items</span>
+              </div>
+            </>
+            <>
+              <div className="item-status">
+                <span className="status-number" style={{ color: '#ff942e' }}>
+                  {villageQrcodeList?.underRepaitItemsCount}
+                </span>
+                <span className="status-type">Under Repair</span>
+              </div>
+            </>
+            {/* ------------------------------------------------------- */}
           </div>
           <div className="view-actions">
             <button className="view-btn list-view" title="List View">
@@ -94,38 +87,11 @@ const WidgetsGroub = ({ GroupTitle, StatusArray, WidgetData }) => {
         </div>
         <div className="project-boxes jsGridView">
           {/* ---------------------Widgets--------------------------- */}
-          {WidgetData?.map((variant) => (
+          {CategoriesData?.map((category) => (
             <>
-              <Widget
-                Id={variant.id}
-                Date={variant.date}
-                MainTitle={variant.mainTitle}
-                SubTitle={variant.subTitle}
-                BgColor={variant.bgColor}
-                Color={variant.color}
-                Progress={variant.progress}
-                DoneItems={variant.doneItems}
-                PendingItems={variant.pendingItems}
-              />
+              <Widget key={category.id} Category={category} />
             </>
           ))}
-          {/* {data?.map((variant) => (
-            <>
-              <Widget
-                Id={variant.id}
-                MainTitle={variant.title}
-                Date={variant.date}
-
-                // SubTitle={variant.subTitle}
-                // BgColor={variant.bgColor}
-                // Color={variant.color}
-                // Progress={variant.progress}
-                DoneItems={variant.doneItems}
-                PendingItems={variant.pendingItems}
-              />
-            </>
-          ))} */}
-
         </div>
       </div>
     </>

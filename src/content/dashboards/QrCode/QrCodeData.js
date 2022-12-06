@@ -18,76 +18,32 @@ export const StatusScan = [
 // ----------------------------------------------------------------------------------
 export const WidgetLandingData = [
   {
-    id: 1,
-    // this can be today's date
-    date: 'December 10, 2020',
-    mainTitle: 'Mechanics', // *******************
-    // here i can do if else ,, if there is underRapair Items !== 0 return under Repair
-    subTitle: 'All Good',
-    // here i can 
     bgColor: '#fee4cb',
     color: '#ff942e',
-    // i can do this in front end as well
-    progress: '100%',
-    // count all itrms / i can do it in front end 
-    doneItems: '3',
-    // i can do it in front end as well
-    pendingItems: '0',
   },
   {
-    id: 2,
-    date: 'December 10, 2020',
-    mainTitle: 'Electricity',
-    subTitle: 'Under Repair',
+   
     bgColor: '#e9e7fd',
     color: '#4f3ff0',
-    progress: '98%',
-    doneItems: '231',
-    pendingItems: '12',
   },
   {
-    id: 3,
-    date: 'December 10, 2020',
-    mainTitle: 'Agricultural',
-    subTitle: 'Under Repair',
+  
     bgColor: '#ffd3e2',
     color: '#df3670',
-    progress: '79%',
-    doneItems: '123',
-    pendingItems: '21',
   },
-  {
-    id: 5,
-    date: 'December 10, 2020',
-    mainTitle: 'Cameras',
-    subTitle: 'Under Repair',
+  {   
     bgColor: '#d5deff',
     color: '#4067f9',
-    progress: '90%',
-    doneItems: '56',
-    pendingItems: '8',
   },
   {
-    id: 4,
-    date: 'December 10, 2020',
-    mainTitle: 'Networks',
-    subTitle: 'All Good',
+    
     bgColor: '#c8f7dc',
     color: '#34c471',
-    progress: '100%',
-    doneItems: '42',
-    pendingItems: '0',
   },
   {
-    id: 6,
-    date: 'December 10, 2020',
-    mainTitle: 'swimming Pools',
-    subTitle: 'Under Repair',
+   
     bgColor: '#fee4cb',
     color: '#ff942e',
-    progress: '80%',
-    doneItems: '123',
-    pendingItems: '13',
   },
 ];
 

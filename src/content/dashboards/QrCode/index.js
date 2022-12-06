@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable arrow-body-style */
 /* eslint-disable react/button-has-type */
 import { Box, Grid, Stack } from '@mui/material';
@@ -9,13 +10,12 @@ import { Icon } from '@iconify/react';
 import QrCodeGenerator from './QrCodeGenerator';
 import QrCodeHistory from './QrCodeHistory';
 import QrCodeScanner from './QrCodeScanner';
-// import NotficationList from '../NeedsSystem/NotficationList';
 import WidgetsGroub from './WidgetsGroub';
-import { StatusGenerate, StatusLanding, StatusScan, WidgetLandingData } from './QrCodeData';
+import { StatusGenerate, StatusScan, WidgetLandingData } from './QrCodeData';
 import { useNavigate } from 'react-router';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
 // import QrCode2Icon from '@mui/icons-material/QrCode2';
-
 
 const QrCodeManagment = () => {
   const [tab, setTab] = useState('qrcode_landing');
@@ -23,11 +23,20 @@ const QrCodeManagment = () => {
   const [tabTwo, setTabTwo] = useState(false);
   const [tabThree, setTabThree] = useState(false);
   const [tabFour, setTabFour] = useState(false);
-  // -------------------------------------------
+  // -----*-----*------*------*-----*-----*-----*-----*-----*-----
+  const [villageCategoriesData, setVillageCategoriesData] = useState([]);
+  const [villageQrcodeList, setVillageQrcodeList] = useState([]);
+  // -----*-----*------*------*-----*-----*-----*-----*-----*-----
   const navigate = useNavigate();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
-  // -------------------------------------------
+  const config = {
+    headers: {
+      'Content-type': 'application/json',
+      Authorization: `Bearer ${userInfo?.access}`
+    }
+  };
+  // -----*-----*------*------*-----*-----*-----*-----*-----*-----
   const CheckUserType = () => {
     if (userInfo.user_type === 'owners_manager') {
       navigate('/dashboard/owners', { replace: true });
@@ -36,28 +45,90 @@ const QrCodeManagment = () => {
     } else if (userInfo.user_type === 'gate_manager') {
       navigate('/dashboard/gate', { replace: true });
     }
-  }
+  };
 
   useEffect(() => {
-    CheckUserType()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
+    CheckUserType();
+  }, []);
+  // -----*-----*------*------Get QR Code List Data*-----*-----*-----*-----*-----
+  const getQrcodeLIstData = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_KEY}/api/${userInfo?.village_Id}/qrcode_list/`,
+        config
+      );
+      setVillageQrcodeList(response.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  useEffect(() => {
+    getQrcodeLIstData();
+  }, []);
+  // -----*-----*------*------Get Categories Data*-----*-----*-----*-----*-----
+  const getCategories = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_KEY}/api/${userInfo?.village_Id}/get_categories`,
+        config
+      );
+      setVillageCategoriesData(response.data.categories);
+      // console.log(response.data.categories);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  useEffect(() => {
+    getCategories();
+  }, []);
+  // -----*-----*------*------*-----*-----*-----*-----*-----*-----
+  // -----*-----*------*------Get Categories Data*-----*-----*-----*-----*-----
+  // const getCategoriesData = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       `${process.env.REACT_APP_API_KEY}/api/${userInfo?.village_Id}/get_items`,
+  //       config
+  //     );
+  //     setVillageCategoriesData(response.data);
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
+  // useEffect(() => {
+  //   getCategoriesData();
+  // }, []);
+  // -----*-----*------*------*-----*-----*-----*-----*-----*-----
   return (
     <Box sx={{ minWidth: '100%important' }}>
-      <Box className="app-container" sx={{ borderRadius: '15px', minWidth: '100%!important' }} >
-        <Stack flexDirection='column' className="app-header" >
-          <Box className="app-header-left" sx={{ alignSelf: 'start', padding: '2rem' }} >
+      <Box
+        className="app-container"
+        sx={{ borderRadius: '15px', minWidth: '100%!important' }}
+      >
+        <Stack flexDirection="column" className="app-header">
+          <Box
+            className="app-header-left"
+            sx={{ alignSelf: 'start', padding: '2rem' }}
+          >
             <span className="app-icon" />
             <p className="app-name">QR-Code Managment</p>
           </Box>
           {/* --------------------- Side Icons -------------------------------------------------- */}
-          <Box sx={{ display: 'flex', flexDirection: 'row', minWidth: '100%!important' }}>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              minWidth: '100%!important'
+            }}
+          >
             <div className="app-sidebar">
               <Box
                 component="a"
                 to={'#'}
-                className={tabOne === true ? 'app-sidebar-link active' : 'app-sidebar-link'}
+                className={
+                  tabOne === true
+                    ? 'app-sidebar-link active'
+                    : 'app-sidebar-link'
+                }
                 onClick={() => {
                   setTabOne(true);
                   setTab('qrcode_landing');
@@ -86,7 +157,11 @@ const QrCodeManagment = () => {
               <Box
                 component="a"
                 to={'#'}
-                className={tabTwo === true ? 'app-sidebar-link active' : 'app-sidebar-link'}
+                className={
+                  tabTwo === true
+                    ? 'app-sidebar-link active'
+                    : 'app-sidebar-link'
+                }
                 onClick={() => {
                   setTabTwo(true);
                   setTab('generate_qrcode');
@@ -100,7 +175,11 @@ const QrCodeManagment = () => {
               <Box
                 component="a"
                 to={'#'}
-                className={tabThree === true ? 'app-sidebar-link active' : 'app-sidebar-link'}
+                className={
+                  tabThree === true
+                    ? 'app-sidebar-link active'
+                    : 'app-sidebar-link'
+                }
                 onClick={() => {
                   setTabThree(true);
                   setTab('qrcode_scan');
@@ -115,7 +194,11 @@ const QrCodeManagment = () => {
               <Box
                 component="a"
                 to={'#'}
-                className={tabFour === true ? 'app-sidebar-link active' : 'app-sidebar-link'}
+                className={
+                  tabFour === true
+                    ? 'app-sidebar-link active'
+                    : 'app-sidebar-link'
+                }
                 onClick={() => {
                   setTabFour(true);
                   setTab('qrcode_history');
@@ -147,12 +230,27 @@ const QrCodeManagment = () => {
             <Grid container>
               <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
                 {tab === 'qrcode_landing' ? (
-                  <WidgetsGroub GroupTitle={'Statistics'} WidgetData={WidgetLandingData} StatusArray={StatusLanding} />
+                  <WidgetsGroub
+                    villageQrcodeList={villageQrcodeList}
+                    GroupTitle={'Statistics'}
+                    WidgetData={WidgetLandingData}
+                    CategoriesData={villageCategoriesData}
+                  />
                 ) : null}
                 {tab === 'generate_qrcode' ? (
-                  <QrCodeGenerator GroupTitle={'Generate QR Code'} StatusArray={StatusGenerate} />
+                  <QrCodeGenerator
+                    GroupTitle={'Generate QR Code'}
+                    StatusArray={StatusGenerate}
+                    CategoriesData={villageCategoriesData}
+                    villageQrcodeList={villageQrcodeList}
+                  />
                 ) : null}
-                {tab === 'qrcode_scan' ? <QrCodeScanner GroupTitle={'Scan QR Code'} StatusArray={StatusScan} /> : null}
+                {tab === 'qrcode_scan' ? (
+                  <QrCodeScanner
+                    GroupTitle={'Scan QR Code'}
+                    StatusArray={StatusScan}
+                  />
+                ) : null}
                 {tab === 'qrcode_history' ? <QrCodeHistory /> : null}
               </Grid>
             </Grid>
