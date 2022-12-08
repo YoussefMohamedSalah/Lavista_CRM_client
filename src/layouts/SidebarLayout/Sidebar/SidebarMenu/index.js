@@ -13,25 +13,18 @@ import {
 import { NavLink as RouterLink } from 'react-router-dom';
 import { SidebarContext } from 'src/contexts/SidebarContext';
 
-import DesignServicesTwoToneIcon from '@mui/icons-material/DesignServicesTwoTone';
-// import BrightnessLowTwoToneIcon from '@mui/icons-material/BrightnessLowTwoTone';
+// icons
+
 import MmsTwoToneIcon from '@mui/icons-material/MmsTwoTone';
 import TableChartTwoToneIcon from '@mui/icons-material/TableChartTwoTone';
 import AccountCircleTwoToneIcon from '@mui/icons-material/AccountCircleTwoTone';
 import BallotTwoToneIcon from '@mui/icons-material/BallotTwoTone';
-// import BeachAccessTwoToneIcon from '@mui/icons-material/BeachAccessTwoTone';
-// import EmojiEventsTwoToneIcon from '@mui/icons-material/EmojiEventsTwoTone';
-// import FilterVintageTwoToneIcon from '@mui/icons-material/FilterVintageTwoTone';
-// import HowToVoteTwoToneIcon from '@mui/icons-material/HowToVoteTwoTone';
-// import LocalPharmacyTwoToneIcon from '@mui/icons-material/LocalPharmacyTwoTone';
-// import RedeemTwoToneIcon from '@mui/icons-material/RedeemTwoTone';
-// import SettingsTwoToneIcon from '@mui/icons-material/SettingsTwoTone';
-// import TrafficTwoToneIcon from '@mui/icons-material/TrafficTwoTone';
-// import CheckBoxTwoToneIcon from '@mui/icons-material/CheckBoxTwoTone';
-// import ChromeReaderModeTwoToneIcon from '@mui/icons-material/ChromeReaderModeTwoTone';
-// import WorkspacePremiumTwoToneIcon from '@mui/icons-material/WorkspacePremiumTwoTone';
-// import CameraFrontTwoToneIcon from '@mui/icons-material/CameraFrontTwoTone';
-// import DisplaySettingsTwoToneIcon from '@mui/icons-material/DisplaySettingsTwoTone';
+import Diversity3Icon from '@mui/icons-material/Diversity3';
+import VillaIcon from '@mui/icons-material/Villa';
+import DeveloperBoardIcon from '@mui/icons-material/DeveloperBoard';
+import HowToVoteIcon from '@mui/icons-material/HowToVote';
+import ChatIcon from '@mui/icons-material/Chat';
+import AnalyticsIcon from '@mui/icons-material/Analytics';
 import { useSelector } from 'react-redux';
 
 const MenuWrapper = styled(Box)(
@@ -214,32 +207,39 @@ function SidebarMenu() {
     <>
       {userInfo ? (
         <MenuWrapper>
-          <List component="div">
+          <List component="div"
+            subheader={
+              <ListSubheader component="div" disableSticky>
+                assiability
+              </ListSubheader>
+            }>
             <SubMenuWrapper>
               <List component="div">
-                <ListItem component="div">
-                  <Button
-                    disableRipple
-                    component={RouterLink}
-                    onClick={closeSidebar}
-                    to="/overview"
-                    startIcon={<DesignServicesTwoToneIcon />}
-                  >
-                    Overview
-                  </Button>
-                </ListItem>
                 {villageManager && (
-                  <ListItem component="div">
-                    <Button
-                      disableRipple
-                      component={RouterLink}
-                      onClick={closeSidebar}
-                      to="/dashboard/messenger"
-                      startIcon={<MmsTwoToneIcon />}
-                    >
-                      Messenger
-                    </Button>
-                  </ListItem>
+                  <>
+                    <ListItem component="div">
+                      <Button
+                        disableRipple
+                        component={RouterLink}
+                        onClick={closeSidebar}
+                        to="/dashboard/statistics"
+                        startIcon={<AnalyticsIcon />}
+                      >
+                        Dahboard
+                      </Button>
+                    </ListItem>
+                    <ListItem component="div">
+                      <Button
+                        disableRipple
+                        component={RouterLink}
+                        onClick={closeSidebar}
+                        to="/dashboard/messenger"
+                        startIcon={<ChatIcon />}
+                      >
+                        Chat
+                      </Button>
+                    </ListItem>
+                  </>
                 )}
               </List>
             </SubMenuWrapper>
@@ -248,39 +248,44 @@ function SidebarMenu() {
 
 
 
+          {/* if super Manager */}
 
+          {superManager && (
+            <>
+              <SubMenuWrapper>
+                <List component="div">
+                  <ListItem component="div">
+                    <Button
+                      disableRipple
+                      component={RouterLink}
+                      onClick={closeSidebar}
+                      to="/dashboard/center_managment"
+                      startIcon={<AccountCircleTwoToneIcon />}
+                    >
+                      Dashboard
+                    </Button>
+                  </ListItem>
+                </List>
+              </SubMenuWrapper>
 
-          <SubMenuWrapper>
-            <List component="div">
-              <ListItem component="div">
-                <Button
-                  disableRipple
-                  component={RouterLink}
-                  onClick={closeSidebar}
-                  to="/dashboard/center_managment"
-                  startIcon={<AccountCircleTwoToneIcon />}
-                >
-                  Dashboard
-                </Button>
-              </ListItem>
-            </List>
-          </SubMenuWrapper>
+              <SubMenuWrapper>
+                <List component="div">
+                  <ListItem component="div">
+                    <Button
+                      disableRipple
+                      component={RouterLink}
+                      onClick={closeSidebar}
+                      to="/dashboard/calendar"
+                      startIcon={<AccountCircleTwoToneIcon />}
+                    >
+                      Calendar
+                    </Button>
+                  </ListItem>
+                </List>
+              </SubMenuWrapper>
+            </>
+          )}
 
-          <SubMenuWrapper>
-            <List component="div">
-              <ListItem component="div">
-                <Button
-                  disableRipple
-                  component={RouterLink}
-                  onClick={closeSidebar}
-                  to="/dashboard/calendar"
-                  startIcon={<AccountCircleTwoToneIcon />}
-                >
-                  Calendar
-                </Button>
-              </ListItem>
-            </List>
-          </SubMenuWrapper>
 
 
 
@@ -315,7 +320,7 @@ function SidebarMenu() {
                       component={RouterLink}
                       onClick={closeSidebar}
                       to="/dashboard/workers"
-                      startIcon={<AccountCircleTwoToneIcon />}
+                      startIcon={<Diversity3Icon />}
                     >
                       Workers
                     </Button>
@@ -326,7 +331,7 @@ function SidebarMenu() {
                       component={RouterLink}
                       onClick={closeSidebar}
                       to="/dashboard/owners"
-                      startIcon={<AccountCircleTwoToneIcon />}
+                      startIcon={<VillaIcon />}
                     >
                       Owners
                     </Button>
@@ -337,7 +342,7 @@ function SidebarMenu() {
                       component={RouterLink}
                       onClick={closeSidebar}
                       to="/dashboard/resources"
-                      startIcon={<AccountCircleTwoToneIcon />}
+                      startIcon={<DeveloperBoardIcon />}
                     >
                       Resources
                     </Button>
@@ -348,7 +353,7 @@ function SidebarMenu() {
                       component={RouterLink}
                       onClick={closeSidebar}
                       to="/dashboard/needs"
-                      startIcon={<AccountCircleTwoToneIcon />}
+                      startIcon={<HowToVoteIcon />}
                     >
                       Needs
                     </Button>
@@ -443,32 +448,6 @@ function SidebarMenu() {
             </List>
           )}
           {/* if Village Manager */}
-          {villageManager && (
-            <List
-              component="div"
-              subheader={
-                <ListSubheader component="div" disableSticky>
-                  Managment
-                </ListSubheader>
-              }
-            >
-              <SubMenuWrapper>
-                <List component="div">
-                  <ListItem component="div">
-                    <Button
-                      disableRipple
-                      component={RouterLink}
-                      onClick={closeSidebar}
-                      to="/management/transactions"
-                      startIcon={<TableChartTwoToneIcon />}
-                    >
-                      Maintenance Needs
-                    </Button>
-                  </ListItem>
-                </List>
-              </SubMenuWrapper>
-            </List>
-          )}
           {workersManager && (
             <List
               component="div"

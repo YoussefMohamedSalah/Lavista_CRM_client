@@ -17,6 +17,9 @@ import {
 import TrendingUp from '@mui/icons-material/TrendingUp';
 import Text from 'src/components/Text';
 import Chart from 'react-apexcharts';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 const AvatarSuccess = styled(Avatar)(
   ({ theme }) => `
@@ -53,8 +56,50 @@ const ListItemAvatarWrapper = styled(ListItemAvatar)(
 `
 );
 
-function AccountBalance() {
+function AccountBalance({ handleOpen }) {
+  const [data, setData] = useState([])
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+  console.log(userInfo)
+  const config = {
+    headers: {
+      'Content-type': 'application/json',
+      Authorization: `Bearer ${userInfo?.access}`,
+    },
+  };
+
+  // -----*-----*------*------Get Category Data*-----*-----*-----*-----*-----
+
+  const getAllCategories = async () => {
+    try {
+      const data = await axios.get(`${process.env.REACT_APP_API_KEY}/api/${userInfo.village_Id}/villages_maintenance_fees`, config);
+      setData(data.data)
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // -----*-----*------*------*-----*-----*-----*-----*-----*-----
+
+  useEffect(() => {
+    getAllCategories();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+
+
+  // -----*-----*------*------*-----*-----*-----*-----*-----*-----
+  let sum = 0,
+    arr = data,
+    i = arr.length;
+  while (i--) {
+    // include radix otherwise last element gets interpreted as 16
+    sum += parseInt(arr[i]) || 0;
+  }
+  console.log(sum) // sum => 10 as 3.0 and 4\n were successfully parsed
   const theme = useTheme();
+  // -----*-----*------*------*-----*-----*-----*-----*-----*-----
 
   const chartOptions = {
     chart: {
@@ -141,7 +186,7 @@ function AccountBalance() {
             </Typography>
             <Box>
               <Typography variant="h1" gutterBottom>
-                EGP 54,584.23
+                EGP {sum.toLocaleString()}
               </Typography>
               <Typography
                 variant="h4"
@@ -180,7 +225,7 @@ function AccountBalance() {
                 </Button>
               </Grid>
               <Grid sm item>
-                <Button fullWidth variant="contained">
+                <Button fullWidth variant="contained" onClick={() => handleOpen()}>
                   View Transactions
                 </Button>
               </Grid>

@@ -29,11 +29,11 @@ function Footer() {
         >
           Crafted by{' '}
           <Link
-            href="https://www.linkedin.com/in/youssef-salah-7aa783212/"
+            href="#"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Youssef M.Salah
+            SH.CO
           </Link>
         </Typography>
       </Box>

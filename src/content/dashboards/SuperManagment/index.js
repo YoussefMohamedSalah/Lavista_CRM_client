@@ -1,8 +1,17 @@
 import { Helmet } from 'react-helmet-async';
 import PageHeader from './PageHeader';
 import PageTitleWrapper from 'src/components/PageTitleWrapper';
-import { Grid, Container, Box, Button, useTheme, Typography, IconButton } from '@mui/material';
+import {
+  Grid,
+  Container,
+  Box,
+  Button,
+  useTheme,
+  Typography,
+  IconButton
+} from '@mui/material';
 import Footer from 'src/components/Footer';
+// import Main from './Main'
 
 // import AccountBalance from './AccountBalance';
 // import Permissions from './Permissions';
@@ -13,17 +22,16 @@ import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { mockTransactions } from './mockTransactions'
+import { mockTransactions } from './mockTransactions';
 
-
-import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
-import EmailIcon from "@mui/icons-material/Email";
-import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import TrafficIcon from "@mui/icons-material/Traffic";
+import DownloadOutlinedIcon from '@mui/icons-material/DownloadOutlined';
+import EmailIcon from '@mui/icons-material/Email';
+import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import TrafficIcon from '@mui/icons-material/Traffic';
 // import LineChart from "./LineChart";
-import StatBox from "./stateBox";
-
+import StatBox from './stateBox';
+// import Dashboard from './Main';
 
 function DashboardCrypto() {
   const navigate = useNavigate();
@@ -35,7 +43,7 @@ function DashboardCrypto() {
     if (userInfo.user_type === 'qr_code_manager') {
       navigate('/dashboard/qr_code', { replace: true });
     } else if (userInfo.user_type === 'village_manager') {
-      navigate('/dashboard/crypto', { replace: true });
+      navigate('/dashboard/statistics', { replace: true });
     } else if (userInfo.user_type === 'gate_manager') {
       navigate('/dashboard/gate', { replace: true });
     } else if (userInfo.user_type === 'workers_manager') {
@@ -43,12 +51,12 @@ function DashboardCrypto() {
     } else if (userInfo.user_type === 'owners_manager') {
       navigate('/dashboard/owners', { replace: true });
     }
-  }
+  };
 
   useEffect(() => {
-    CheckUserType()
+    CheckUserType();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, []);
 
   return (
     <>
@@ -62,22 +70,17 @@ function DashboardCrypto() {
 
       <Box m="20px">
         {/* HEADER */}
-        <Box
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-        >
+        <Box display="flex" justifyContent="space-between" alignItems="center">
           <Box>
             <Button
               sx={{
-
                 color: 'red',
-                fontSize: "14px",
-                fontWeight: "bold",
-                padding: "10px 20px",
+                fontSize: '14px',
+                fontWeight: 'bold',
+                padding: '10px 20px'
               }}
             >
-              <DownloadOutlinedIcon sx={{ mr: "10px" }} />
+              <DownloadOutlinedIcon sx={{ mr: '10px' }} />
               Download Reports
             </Button>
           </Box>
@@ -94,7 +97,6 @@ function DashboardCrypto() {
           <Box
             gridColumn="span 3"
             sx={{ backgroundColor: '#1F2A40' }}
-
             display="flex"
             alignItems="center"
             justifyContent="center"
@@ -108,7 +110,7 @@ function DashboardCrypto() {
                 <EmailIcon
                   sx={{
                     color: '#4cceac',
-                    fontSize: "26px",
+                    fontSize: '26px'
                   }}
                 />
               }
@@ -117,14 +119,12 @@ function DashboardCrypto() {
           <Box
             gridColumn="span 3"
             sx={{ backgroundColor: '#1F2A40' }}
-
             display="flex"
             alignItems="center"
             justifyContent="center"
           >
             <StatBox
               title="431,225"
-
               subtitle="Sales Obtained"
               progress="0.50"
               increase="+21%"
@@ -132,7 +132,7 @@ function DashboardCrypto() {
                 <PointOfSaleIcon
                   sx={{
                     color: '#4cceac',
-                    fontSize: "26px",
+                    fontSize: '26px'
                   }}
                 />
               }
@@ -141,7 +141,6 @@ function DashboardCrypto() {
           <Box
             gridColumn="span 3"
             sx={{ backgroundColor: '#1F2A40' }}
-
             display="flex"
             alignItems="center"
             justifyContent="center"
@@ -155,7 +154,7 @@ function DashboardCrypto() {
                 <PersonAddIcon
                   sx={{
                     color: '#4cceac',
-                    fontSize: "26px",
+                    fontSize: '26px'
                   }}
                 />
               }
@@ -164,7 +163,6 @@ function DashboardCrypto() {
           <Box
             gridColumn="span 3"
             sx={{ backgroundColor: '#1F2A40' }}
-
             display="flex"
             alignItems="center"
             justifyContent="center"
@@ -178,7 +176,7 @@ function DashboardCrypto() {
                 <TrafficIcon
                   sx={{
                     color: '#4cceac',
-                    fontSize: "26px",
+                    fontSize: '26px'
                   }}
                 />
               }
@@ -186,11 +184,7 @@ function DashboardCrypto() {
           </Box>
 
           {/* ROW 2 */}
-          <Box
-            gridColumn="span 8"
-            gridRow="span 2"
-
-          >
+          <Box gridColumn="span 8" gridRow="span 2">
             <Box
               mt="25px"
               p="0 30px"
@@ -199,18 +193,10 @@ function DashboardCrypto() {
               alignItems="center"
             >
               <Box>
-                <Typography
-                  variant="h5"
-                  fontWeight="600"
-
-                >
+                <Typography variant="h5" fontWeight="600">
                   Revenue Generated
                 </Typography>
-                <Typography
-                  variant="h3"
-                  fontWeight="bold"
-
-                >
+                <Typography variant="h3" fontWeight="bold">
                   $59,342.32
                 </Typography>
               </Box>
@@ -218,8 +204,8 @@ function DashboardCrypto() {
                 <IconButton>
                   <DownloadOutlinedIcon
                     sx={{
-                      fontSize: "26px",
-                      color: 'red',
+                      fontSize: '26px',
+                      color: 'red'
                     }}
                   />
                 </IconButton>
@@ -229,12 +215,7 @@ function DashboardCrypto() {
               {/* <LineChart isDashboard={true} /> */}
             </Box>
           </Box>
-          <Box
-            gridColumn="span 4"
-            gridRow="span 2"
-
-            overflow="auto"
-          >
+          <Box gridColumn="span 4" gridRow="span 2" overflow="auto">
             <Box
               display="flex"
               justifyContent="space-between"
@@ -245,11 +226,7 @@ function DashboardCrypto() {
                 backgroundColor: '#1F2A40'
               }}
             >
-              <Typography
-                variant="h5"
-                fontWeight="600"
-                sx={{ color: 'wheat' }}
-              >
+              <Typography variant="h5" fontWeight="600" sx={{ color: 'wheat' }}>
                 Recent Transactions
               </Typography>
             </Box>
@@ -273,13 +250,11 @@ function DashboardCrypto() {
                   >
                     {transaction.txId}
                   </Typography>
-                  <Typography sx={{ color: 'wheat' }} >
+                  <Typography sx={{ color: 'wheat' }}>
                     {transaction.user}
                   </Typography>
                 </Box>
-                <Box sx={{ color: 'wheat' }} >
-                  {transaction.date}
-                </Box>
+                <Box sx={{ color: 'wheat' }}>{transaction.date}</Box>
                 <Box
                   sx={{ backgroundColor: '#4cceac', color: 'wheat' }}
                   p="5px 10px"
@@ -354,10 +329,6 @@ function DashboardCrypto() {
         </Box>
       </Box>
 
-
-
-
-
       {/* <Container maxWidth="lg">
         <Grid
           container
@@ -380,6 +351,7 @@ function DashboardCrypto() {
           </Grid>
         </Grid>
       </Container> */}
+      {/* <Main /> */}
       <Footer />
     </>
   );

@@ -23,7 +23,7 @@ const Login = Loader(lazy(() => import('src/content/pages/Login')));
 // Dashboard
 
 const SuperManagment = Loader(lazy(() => import('src/content/dashboards/SuperManagment')));
-const Crypto = Loader(lazy(() => import('src/content/dashboards/Crypto')));
+const Statistics = Loader(lazy(() => import('src/content/dashboards/Statistics')));
 const Owners = Loader(lazy(() => import('src/content/dashboards/Owners')));
 const Needs = Loader(lazy(() => import('src/content/dashboards/Needs')));
 const Workers = Loader(lazy(() => import('src/content/dashboards/Workers')));
@@ -141,11 +141,11 @@ const routes = [
     children: [
       {
         path: '',
-        element: <Navigate to="crypto" replace />
+        element: <Navigate to="statistics" replace />
       },
       {
-        path: 'crypto',
-        element: <Crypto />
+        path: 'statistics',
+        element: <Statistics />
       },
       {
         path: 'center_managment',

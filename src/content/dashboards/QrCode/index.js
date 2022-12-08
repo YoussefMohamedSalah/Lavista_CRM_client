@@ -62,9 +62,6 @@ const QrCodeManagment = () => {
       console.error(err);
     }
   };
-  // useEffect(() => {
-  //   getQrcodeLIstData();
-  // }, []);
   // -----*-----*------*------Get Categories Data*-----*-----*-----*-----*-----
   const getCategories = async () => {
     try {
