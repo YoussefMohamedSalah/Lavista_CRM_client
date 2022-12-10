@@ -352,7 +352,7 @@ function SidebarMenu() {
                       disableRipple
                       component={RouterLink}
                       onClick={closeSidebar}
-                      to="/dashboard/needs"
+                      to="/dashboard/resources"
                       startIcon={<HowToVoteIcon />}
                     >
                       Needs

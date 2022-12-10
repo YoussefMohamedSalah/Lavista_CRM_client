@@ -18,7 +18,7 @@ function Footer() {
       >
         <Box>
           <Typography variant="subtitle1">
-            &copy; 2022 - Sphinx Co. All CopyRights Reserved.
+            &copy; 2022 - SH Co. All CopyRights Reserved.
           </Typography>
         </Box>
         <Typography

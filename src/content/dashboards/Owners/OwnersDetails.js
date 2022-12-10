@@ -29,7 +29,8 @@ function OwnersFinance() {
                         <Grid container justifyContent="space-between" alignItems="center">
                             <Grid item>
                                 <Typography variant="h3" component="h3" gutterBottom>
-                                    Owners Details                                </Typography>
+                                    Owners Details
+                                </Typography>
                                 <Typography variant="subtitle2">
                                     Here All About Owners Details
                                 </Typography>

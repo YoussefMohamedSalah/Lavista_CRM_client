@@ -30,6 +30,8 @@ const Workers = Loader(lazy(() => import('src/content/dashboards/Workers')));
 const Permissions = Loader(lazy(() => import('src/content/dashboards/Permissions')));
 const QrCode = Loader(lazy(() => import('src/content/dashboards/QrCode')))
 const Calendar = Loader(lazy(() => import('src/components/Calendar/Calendar')))
+const Resources = Loader(lazy(() => import('src/content/dashboards/Resources')))
+
 
 
 
@@ -154,6 +156,10 @@ const routes = [
       {
         path: 'calendar',
         element: <Calendar />
+      },
+      {
+        path: 'resources',
+        element: <Resources />
       },
       {
         path: 'owners',

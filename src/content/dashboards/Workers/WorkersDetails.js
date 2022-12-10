@@ -49,9 +49,9 @@ function WorkersDetails() {
                 </Grid>
             </PageTitleWrapper>
             <Card sx={{ width: '100%' }}>
-                <WorkersDetailsTable handleClose={handleClose} />
+                <WorkersDetailsTable />
             </Card>
-            <AddNewWorkerModal show={show} />
+            <AddNewWorkerModal show={show} handleClose={handleClose} />
         </Stack>
     );
 };
